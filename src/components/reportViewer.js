@@ -60,17 +60,38 @@ export default function ReportViewer() {
     },
   ];
 
+  function replaceStaticVariables(pagedReport) {
+    if (!pagedReport || !pagedReport.length) return;
+    let pageCount = pagedReport.length;
+    let pageNumber = 0;
+    for (let page of pagedReport) {
+      if (!page.length) continue;
+      pageNumber++;
+      for (let table of page) {
+        if (!table.rows) continue;
+        for (let row of table.rows) {
+          if (!row.length) continue;
+          for (let cell of row) {
+            if (cell.hasStaticVariables) {
+              cell.text = replace(cell.text, '{pageCount}', pageCount);
+              cell.text = replace(cell.text, '{pageNumber}', pageNumber);
+            }
+          }
+        }
+      }
+    }
+  }
+
   function pageReport(report) {
     let pagedReport = [];
     let currentPage = [];
     let currentPageHeightRemaining = 0;
     let maxPageHeight = 29;
-    if (report.pageHeader) maxPageHeight -= report.pageHeader.height;
-    if (report.pageFooter) maxPageHeight -= report.pageFooter.height;
+    if (report.pageHeader) maxPageHeight -= report.pageHeader.staticHeight;
+    if (report.pageFooter) maxPageHeight -= report.pageFooter.staticHeight;
 
     if (report.pageHeader) currentPage = [report.pageHeader];
     currentPageHeightRemaining = maxPageHeight;
-    let currentTable = {};
 
     for (let section of report.sections) {
       let rowsLeft = section.rows.length;
@@ -78,12 +99,20 @@ export default function ReportViewer() {
       let loopCount = 0;
       if (section.rows && section.rows.length) {
         while (rowsLeft) {
+          let currentTable = {};
+
           loopCount++;
           if (loopCount > 100) break;
 
-          currentTable.rowHeight = section.rowHeight;
+          currentTable = JSON.parse(JSON.stringify(section));
+          if (section.title) {
+            currentTable.title.text = bindDataIntoCellText(
+              currentTable.title.text,
+              currentTable.title.variables
+            );
+            currentPageHeightRemaining -= section.title.height;
+          }
           if (section.head) {
-            currentTable.head = section.head;
             currentPageHeightRemaining -= section.rowHeight;
           }
           let rowsAvailable = Math.floor(
@@ -98,12 +127,19 @@ export default function ReportViewer() {
           rowsLeft -= currentTable.rows.length;
           rowsUsed += currentTable.rows.length;
 
+          currentPage.push(currentTable);
           if (rowsLeft) {
-            currentPage.push(currentTable);
+            console.log(
+              'NEW PAGE',
+              rowsLeft,
+              rowsUsed,
+              currentTable.rows.length
+            );
             if (report.pageFooter) currentPage.push(report.pageFooter);
-            pagedReport.push(currentPage);
+            pagedReport.push(JSON.parse(JSON.stringify(currentPage)));
 
             if (report.pageHeader) currentPage = [report.pageHeader];
+            else currentPage = [];
             currentPageHeightRemaining = maxPageHeight;
           }
         }
@@ -111,7 +147,6 @@ export default function ReportViewer() {
     }
 
     // push last page
-    currentPage.push(currentTable);
     if (report.pageFooter) currentPage.push(report.pageFooter);
     pagedReport.push(currentPage);
 
@@ -124,7 +159,6 @@ export default function ReportViewer() {
       pageFooter: null,
       sections: [],
     };
-
     for (let section of reportLayout) {
       if (section.type == 'pageHeader') {
         report.pageHeader = generateTable(section);
@@ -139,8 +173,10 @@ export default function ReportViewer() {
 
   function generateTable(section) {
     let table = {
+      title: section.title,
+      noData: section.noData,
       className: section.className,
-      height: 0,
+      staticHeight: 0,
       rowHeight: section.rowHeight,
       head: [],
       rows: [],
@@ -167,16 +203,16 @@ export default function ReportViewer() {
     }
 
     if (showHeader) {
-      table.height = section.rowHeight;
+      table.staticHeight = section.rowHeight;
     } else {
-      table.height = 0;
+      table.staticHeight = 0;
       delete table.head;
     }
 
     if (table.rows.length) {
-      table.height += section.rowHeight * table.rows.length;
-    } else {
-      table.height += section.noDataHeight;
+      table.staticHeight += section.rowHeight * table.rows.length;
+    } else if (table.noData) {
+      table.staticHeight += table.noData.height;
     }
 
     return table;
@@ -246,11 +282,28 @@ export default function ReportViewer() {
     return text;
   }
 
+  function replaceAll(text, values) {
+    if (!values || !values.length) return text;
+    for (let i = 0; i < values.length; i++) {
+      let search = '{' + i + '}';
+      text = replace(text, search, values[i]);
+    }
+    return text;
+  }
+
+  function replace(text, search, value) {
+    while (text.indexOf(search) !== -1) {
+      text = text.replace(search, value);
+    }
+    return text;
+  }
+
   const [pagedReport, setPagedReport] = useState([]);
 
   useEffect(() => {
     let report = bindReport();
     const newPagedReport = pageReport(report);
+    replaceStaticVariables(newPagedReport);
     setPagedReport(newPagedReport);
     // console.log(JSON.stringify(newPagedReport, null, '  '));
   }, []);
