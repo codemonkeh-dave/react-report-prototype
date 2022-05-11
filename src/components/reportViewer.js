@@ -12,68 +12,37 @@ export default function ReportViewer() {
       title: 'Report Title',
       date: new Date().toLocaleDateString(),
     },
+    summaryDataSet: [
+      { value: '31' },
+      { value: '11.05.22' },
+      { value: '11:30AM' },
+    ],
     dataSet1: [
       { name: 'Frank1 Smith', groupMarker: true, className: 'GroupHeader' },
       { name: '1', company: 'ABC1 Ltd', age: 31 },
       { name: '2', company: 'ABC2 Ltd', age: 32 },
       { name: '3', company: 'ABC3 Ltd', age: 33 },
       { name: '4', company: 'ABC4 Ltd', age: 34 },
-
-      { name: 'Frank2 Smith', groupMarker: true, className: 'GroupHeader' },
-      { name: '5', company: 'ABC1 Ltd', age: 31 },
-      { name: '6', company: 'ABC2 Ltd', age: 32 },
-      { name: '7', company: 'ABC3 Ltd', age: 33 },
-      { name: '8', company: 'ABC4 Ltd', age: 34 },
-
-      { name: 'Frank2 Smith', groupMarker: true, className: 'GroupHeader' },
-      { name: '9', company: 'ABC1 Ltd', age: 31 },
-      { name: '10', company: 'ABC2 Ltd', age: 32 },
-      { name: '11', company: 'ABC3 Ltd', age: 33 },
-      { name: '12', company: 'ABC4 Ltd', age: 34 },
-
-      { name: 'Frank2 Smith', groupMarker: true, className: 'GroupHeader' },
-      { name: '13', company: 'ABC1 Ltd', age: 31 },
-      { name: '14', company: 'ABC2 Ltd', age: 32 },
-      { name: '15', company: 'ABC3 Ltd', age: 33 },
-      { name: '16', company: 'ABC4 Ltd', age: 34 },
-
-      { name: 'Frank2 Smith', groupMarker: true, className: 'GroupHeader' },
-      { name: '17', company: 'ABC1 Ltd', age: 31 },
-      { name: '18', company: 'ABC2 Ltd', age: 32 },
-      { name: '19', company: 'ABC3 Ltd', age: 33 },
-      { name: '20', company: 'ABC4 Ltd', age: 34 },
-
-      { name: 'Frank2 Smith', groupMarker: true, className: 'GroupHeader' },
-      { name: '21', company: 'ABC1 Ltd', age: 31 },
-      { name: '22', company: 'ABC2 Ltd', age: 32 },
-      { name: '23', company: 'ABC3 Ltd', age: 33 },
-      { name: '24', company: 'ABC4 Ltd', age: 34 },
-
-      { name: 'Frank2 Smith', groupMarker: true, className: 'GroupHeader' },
-      { name: 'Frank1', company: 'ABC1 Ltd', age: 31 },
-      { name: 'Frank2', company: 'ABC2 Ltd', age: 32 },
-      { name: 'Frank3', company: 'ABC3 Ltd', age: 33 },
-      { name: 'Frank4', company: 'ABC4 Ltd', age: 34 },
-
-      { name: 'Frank2 Smith', groupMarker: true, className: 'GroupHeader' },
-      { name: 'Frank1', company: 'ABC1 Ltd', age: 31 },
-      { name: 'Frank2', company: 'ABC2 Ltd', age: 32 },
-      { name: 'Frank3', company: 'ABC3 Ltd', age: 33 },
-      { name: 'Frank4', company: 'ABC4 Ltd', age: 34 },
-
-      { name: 'Frank2 Smith', groupMarker: true, className: 'GroupHeader' },
-      { name: 'Frank1', company: 'ABC1 Ltd', age: 31 },
-      { name: 'Frank2', company: 'ABC2 Ltd', age: 32 },
-      { name: 'Frank3', company: 'ABC3 Ltd', age: 33 },
-      { name: 'Frank4', company: 'ABC4 Ltd', age: 34 },
-
-      { name: 'Frank2 Smith', groupMarker: true, className: 'GroupHeader' },
-      { name: 'Frank1', company: 'ABC1 Ltd', age: 31 },
-      { name: 'Frank2', company: 'ABC2 Ltd', age: 32 },
-      { name: 'Frank3', company: 'ABC3 Ltd', age: 33 },
-      { name: 'Frank4', company: 'ABC4 Ltd', age: 34 },
-
-
+      { name: 'Frank1 Smith', groupMarker: true, className: 'GroupHeader' },
+      { name: '1', company: 'ABC1 Ltd', age: 31 },
+      { name: '2', company: 'ABC2 Ltd', age: 32 },
+      { name: '3', company: 'ABC3 Ltd', age: 33 },
+      { name: '4', company: 'ABC4 Ltd', age: 34 },
+      { name: 'Frank1 Smith', groupMarker: true, className: 'GroupHeader' },
+      { name: '1', company: 'ABC1 Ltd', age: 31 },
+      { name: '2', company: 'ABC2 Ltd', age: 32 },
+      { name: '3', company: 'ABC3 Ltd', age: 33 },
+      { name: '4', company: 'ABC4 Ltd', age: 34 },
+      { name: 'Frank1 Smith', groupMarker: true, className: 'GroupHeader' },
+      { name: '1', company: 'ABC1 Ltd', age: 31 },
+      { name: '2', company: 'ABC2 Ltd', age: 32 },
+      { name: '3', company: 'ABC3 Ltd', age: 33 },
+      { name: '4', company: 'ABC4 Ltd', age: 34 },
+      { name: 'Frank1 Smith', groupMarker: true, className: 'GroupHeader' },
+      { name: '1', company: 'ABC1 Ltd', age: 31 },
+      { name: '2', company: 'ABC2 Ltd', age: 32 },
+      { name: '3', company: 'ABC3 Ltd', age: 33 },
+      { name: '4', company: 'ABC4 Ltd', age: 34 },
     ],
   };
 
@@ -85,7 +54,22 @@ export default function ReportViewer() {
       columns: [{ text: '{0}', variables: ['title'] }],
     },
     {
-      rowHeight: .7,
+      type: 'summary',
+      rowHeight: 0.7,
+      marginTop: 5,
+      marginBottom: 5,
+      noDataHeight: 10,
+      dataSet: 'summaryDataSet',
+      rows: [
+        { key: 'Total Days', className: 'a'},
+        { key: 'Creation Date' },
+        { key: 'Creation Time' },
+        { key: 'Text', text: '{0}', variables: ['title'] },
+      ],
+    },
+    {
+      type: 'rows',
+      rowHeight: 0.7,
       noDataHeight: 10,
       dataSet: 'dataSet1',
       columns: [
@@ -105,8 +89,8 @@ export default function ReportViewer() {
         },
         { text: 'Report generated {0}', variables: ['date'] },
         {
-          text: ''
-        }
+          text: '',
+        },
       ],
     },
   ];
@@ -114,15 +98,9 @@ export default function ReportViewer() {
   const [pagedReport, setPagedReport] = useState([]);
 
   useEffect(() => {
-    const staticVariables = ['pageNumber', 'pageCount'];
-    let report = new Report(reportLayout, reportData, staticVariables);
-
+    let report = new Report(reportLayout, reportData);
     let builtReport = report.build();
-
     setPagedReport(builtReport);
-
-    // setPagedReport(pagedReport);
-    // console.log(JSON.stringify(newPagedReport, null, '  '));
   }, []);
 
   return (
@@ -140,16 +118,51 @@ export default function ReportViewer() {
                   </tr>
                 </>
               )}
-              <tr></tr>
-              {table.rows.map((row) => (
-                <tr style={{ height: table.rowHeight + 'cm' }}>
-                  {row.map((cell) => (
-                    <td className={cell.className} colspan={row.colspan}>
-                      {cell.text}
-                    </td>
+              {table.type == 'summary' && (
+                <>
+                  {table.rows.map((row) => (
+                    <>
+                      <tr style={{ height: table.rowHeight + 'cm' }}>
+                        {row.map((cell) => (
+                          <>
+                            <td
+                              width={200}
+                              className={cell.className}
+                              colspan={row.colspan}
+                            >
+                              {cell.text}
+                            </td>
+                            <td
+                              className={cell.className}
+                              colspan={row.colspan}
+                            >
+                              {cell.value}
+                            </td>
+                          </>
+                        ))}
+                      </tr>
+                    </>
                   ))}
-                </tr>
-              ))}
+                </>
+              )}
+
+              {(table.type === 'rows' ||
+                table.type === 'pageFooter' ||
+                table.type === 'pageHeader') && (
+                <>
+                  {table.rows.map((row) => (
+                    <>
+                      <tr style={{ height: table.rowHeight + 'cm' }}>
+                        {row.map((cell) => (
+                          <td className={cell.className} colspan={row.colspan}>
+                            {cell.text}
+                          </td>
+                        ))}
+                      </tr>
+                    </>
+                  ))}
+                </>
+              )}
             </table>
           ))}
         </page>

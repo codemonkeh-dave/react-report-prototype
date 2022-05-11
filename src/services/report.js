@@ -1,14 +1,11 @@
 class Report {
-
   reportLayout = [];
   reportData = {};
-  staticVariables = [];
+  staticVariables = ['pageNumber', 'pageCount'];
 
-  constructor(reportLayout, reportData, staticVariables)
-  {
+  constructor(reportLayout, reportData) {
     this.reportLayout = reportLayout;
     this.reportData = reportData;
-    this.staticVariables = staticVariables ?? [];
   }
 
   replaceStaticVariables(pagedReport) {
@@ -41,6 +38,7 @@ class Report {
     let maxPageHeight = 29;
     if (report.pageHeader) maxPageHeight -= report.pageHeader.staticHeight;
     if (report.pageFooter) maxPageHeight -= report.pageFooter.staticHeight;
+    if (report.summary) maxPageHeight -= report.summary.staticHeight;
 
     if (report.pageHeader) currentPage = [report.pageHeader];
     currentPageHeightRemaining = maxPageHeight;
@@ -51,7 +49,6 @@ class Report {
       let loopCount = 0;
       if (section.rows && section.rows.length) {
         while (rowsLeft) {
-          
           let currentTable = {};
 
           loopCount++;
@@ -69,20 +66,18 @@ class Report {
             currentPageHeightRemaining -= section.rowHeight;
           }
           let rowsAvailable = Math.floor(
-            currentPageHeightRemaining / section.rowHeight * 0.67
+            (currentPageHeightRemaining / section.rowHeight) * 0.67
           ); //todo: BUG this is calculated wrong and we have to subtract 9
           currentTable.rows = section.rows.slice(
             rowsUsed,
             rowsUsed + rowsAvailable
           );
-          currentPageHeightRemaining -= 
+          currentPageHeightRemaining -=
             currentTable.rows.length * section.rowHeight;
           rowsLeft -= currentTable.rows.length;
           rowsUsed += currentTable.rows.length;
-
           currentPage.push(currentTable);
-          console.log('rowsUsed', rowsUsed);
-          console.log('rowsLeft', rowsLeft);
+
           if (rowsLeft) {
             console.log(
               'NEW PAGE',
@@ -112,6 +107,7 @@ class Report {
     let report = {
       pageHeader: null,
       pageFooter: null,
+      summary: null,
       sections: [],
     };
     for (let section of this.reportLayout) {
@@ -119,7 +115,11 @@ class Report {
         report.pageHeader = this.generateTable(section);
       } else if (section.type == 'pageFooter') {
         report.pageFooter = this.generateTable(section);
-      } else {
+      }
+      // else if (section.type == 'summary') {
+      //   report.summary = this.generateTable(section);
+      // }
+      else {
         report.sections.push(this.generateTable(section));
       }
     }
@@ -138,6 +138,9 @@ class Report {
     };
 
     let showHeader = false;
+
+    if (section.type === 'summary') section.columns = [];
+
     for (let column of section.columns) {
       if (column.header) {
         showHeader = true;
@@ -147,14 +150,25 @@ class Report {
       }
     }
 
-    if (section.dataSet) {
-      for (let dataSetRow of this.reportData[section.dataSet]) {
-        let row = this.renderRow(section.columns, dataSetRow);
+    if (section.type === 'summary') {
+      let i = 0;
+      for (let row of section.rows)
+      {
+        let boundRow = this.renderSummaryRow(row, section, i);
+        table.rows.push(boundRow);
+        i++;
+      }
+    }
+    else{
+      if (section.dataSet) {
+        for (let dataSetRow of this.reportData[section.dataSet]) {
+          let row = this.renderRow(section.columns, dataSetRow);
+          table.rows.push(row);
+        }
+      } else {
+        let row = this.renderRow(section.columns, null);
         table.rows.push(row);
       }
-    } else {
-      let row = this.renderRow(section.columns, null);
-      table.rows.push(row);
     }
 
     if (showHeader) {
@@ -170,7 +184,38 @@ class Report {
       table.staticHeight += table.noData.height;
     }
 
+    table.type = section.type;
     return table;
+  }
+
+  renderSummaryRow(row, section, rowId) {
+    let value = "";
+    let cell = {};
+
+    if (section.dataSet)
+    {
+      if (this.reportData[section.dataSet] && this.reportData[section.dataSet][rowId])
+      {
+        value = this.reportData[section.dataSet][rowId].value ?? '';
+      }
+      else
+      {
+        if (row.variables)
+          {
+            value = this.bindDataIntoCellText(row.text, row.variables);
+          }
+      } 
+    }
+
+    cell.text = row.key;
+    cell.value = value,
+    cell.className = row.className;
+
+    if (this.hasStaticVariables(row.variables)) {
+      cell.hasStaticVariables = true;
+    }
+
+    return [cell]
   }
 
   renderRow(columns, dataSetRow) {
@@ -252,20 +297,16 @@ class Report {
     }
     return text;
   }
-  
 
-  build()
-  {
+  build() {
     console.log(this.reportLayout);
     let report = this.bindReport(this.reportLayout);
-    
+
     let pagedReport = this.pageReport(report);
-    console.log(">>",pagedReport);
+    console.log('>>', pagedReport);
     pagedReport = this.replaceStaticVariables(pagedReport);
     return pagedReport;
-
   }
-
 }
 
-export { Report }
+export { Report };
