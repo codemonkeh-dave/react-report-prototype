@@ -13,9 +13,9 @@ export default function ReportViewer() {
       date: new Date().toLocaleDateString(),
     },
     summaryDataSet: [
-      { value: '31' },
-      { value: '11.05.22' },
-      { value: '11:30AM' },
+      // { value: '31' },
+      // { value: '11.05.22' },
+      // { value: '11:30AM' },
     ],
     dataSet1: [
       // { name: 'Daniel Frain', age: 59 },
@@ -79,6 +79,7 @@ export default function ReportViewer() {
         { header: 'Company', dataSetKey: 'company' },
         { header: 'Age', dataSetKey: 'age' },
       ],
+      emptyMessage: 'No users to display',
     },
     {
       type: 'pageFooter',
@@ -98,11 +99,65 @@ export default function ReportViewer() {
   ];
 
   const [pagedReport, setPagedReport] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
+  function LoadReport() {
     let report = new Report(reportLayout, reportData);
     let builtReport = report.build();
     setPagedReport(builtReport);
+  }
+
+  useEffect(() => {
+    LoadReport();
+
+    setTimeout(() => {
+      reportData.summaryDataSet = [
+        { value: '31' },
+        { value: '11.05.22' },
+        { value: '11:30AM' },
+      ];
+      reportData.dataSet1 = [
+        { name: 'Daniel Frain', age: 59 },
+        { name: 'Andrew Smith', company: 'Chichester Electrical Ltd', age: 44 },
+        { name: 'Michell Barnard', company: 'Creative Images', age: 10 },
+        { name: 'Angela Davies', company: 'Creative Images', age: 43 },
+        { name: 'Peter Jones', company: 'Howard Hunt (City) Ltd', age: 54 },
+        { name: 'Andy Atkinson', company: 'CloudPass', age: 7 },
+        { name: 'Sophie Sowerby', company: 'Creative Images', age: 28 },
+        {
+          name: 'Michael Jones',
+          company: 'Chichester Electrical Ltd',
+          age: 11,
+        },
+        { name: 'Ian Jones', company: 'Cheshire Removals & Storage', age: 35 },
+        { name: 'Kelly Wyatt', company: 'Idris & Co Solicitors', age: 8 },
+        {
+          name: 'Tony Argyle',
+          company: 'Cheshire Removals & Storage',
+          age: 12,
+        },
+        { name: 'Sarah Greenwood', company: 'Creative Images', age: 27 },
+        { name: 'Amy Wi', company: 'Creative Images', age: 55 },
+        {
+          name: 'Geoff Hurst',
+          company: 'Cheshire Removals & Storage',
+          age: 23,
+        },
+        { name: 'Emma Smith', company: 'Cheshire Removals & Storage', age: 43 },
+        { name: 'John Sturrock', company: 'Howard Hunt (City) Ltd', age: 53 },
+        {
+          name: 'Marlon Francis',
+          company: 'Chichester Electrical Ltd',
+          age: 49,
+        },
+        { name: 'Joseph Bloggs', company: 'Howard Hunt (City) Ltd', age: 27 },
+        { name: 'Darren Oliver', company: 'CloudPass', age: 39 },
+        { name: 'Joe Smith', company: 'Howard Hunt (City) Ltd', age: 35 },
+      ];
+
+      setIsLoading(false);
+      LoadReport();
+    }, 1000);
   }, []);
 
   return (
@@ -183,9 +238,25 @@ export default function ReportViewer() {
                         >
                           {row.map((cell) => (
                             <>
-                              {cell.empty && (
+                              {cell.empty && !isLoading && (
                                 <>
-                                  <td colspan={table.head.length} className="empty">No data to display</td>
+                                  <td
+                                    colspan={table.head.length}
+                                    className="empty"
+                                  >
+                                    {table.emptyMessage ?? 'No data to display'}
+                                  </td>
+                                </>
+                              )}
+
+                              {table.type === 'rows' && isLoading && (
+                                <>
+                                  <td
+                                    colspan={table?.head?.length}
+                                    className="empty"
+                                  >
+                                    Loading...
+                                  </td>
                                 </>
                               )}
 

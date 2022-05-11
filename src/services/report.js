@@ -110,8 +110,6 @@ class Report {
             currentTable.rows.length * section.rowHeight;
           }
           
-
-          
           rowsLeft -= currentTable.rows.length;
           rowsUsed += currentTable.rows.length;
           currentPage.push(currentTable);
@@ -174,6 +172,7 @@ class Report {
       className: section.className,
       staticHeight: 0,
       rowHeight: section.rowHeight,
+      emptyMessage: section.emptyMessage,
       head: [],
       rows: [],
     };
