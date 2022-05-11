@@ -44,7 +44,6 @@ class Report {
     currentPageHeightRemaining = maxPageHeight;
 
     for (let section of report.sections) {
-      console.log(section.rows);
       if (!section.rows || section.rows.length == 0)
         section.rows = [[{ empty: true }]];
 
@@ -99,7 +98,6 @@ class Report {
           );
 
           // if empty use fixed no data size
-          console.log(section.rows[0])
           if (section.rows[0].length == 1 && (section.rows[0][0]?.empty))
           {
             currentPageHeightRemaining -= 3;
@@ -152,9 +150,6 @@ class Report {
       } else if (section.type == 'pageFooter') {
         report.pageFooter = this.generateTable(section);
       }
-      // else if (section.type == 'summary') {
-      //   report.summary = this.generateTable(section);
-      // }
       else {
         let table = this.generateTable(section);
         report.sections.push(table);
@@ -267,12 +262,19 @@ class Report {
       if (column.text) {
         cellContents = column.text;
       }
+
       if (dataSetRow && column.dataSetKey && dataSetRow[column.dataSetKey]) {
         cellContents = dataSetRow[column.dataSetKey];
       }
 
       cellContents = this.bindDataIntoCellText(cellContents, column.variables);
       let cell = { text: cellContents };
+      if (column.hideWhenLoading)
+      {
+        cell.hideWhenLoading = true;
+      }
+
+      if (column.type) cell.type = column.type;
 
       if (column.className) cell.className = column.className + ' ';
       if (dataSetRow && dataSetRow.className) {
@@ -281,7 +283,7 @@ class Report {
 
       if (this.hasStaticVariables(column.variables)) {
         cell.hasStaticVariables = true;
-      }
+      }     
 
       if (dataSetRow && dataSetRow.groupMarker) {
         cell.colspan = columns.length;
