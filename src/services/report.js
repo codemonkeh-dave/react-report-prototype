@@ -255,7 +255,6 @@ class Report {
   {
     console.log(this.reportLayout);
     let report = this.bindReport(this.reportLayout);
-    // console.log(report)
     let pagedReport = this.pageReport(report);
     pagedReport = this.replaceStaticVariables(pagedReport);
     return pagedReport;

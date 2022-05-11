@@ -9,6 +9,10 @@ table {
   border-collapse: collapse;
 }
 
+table.pageFooter {
+  width: calc(100% - 20px);
+}
+
 .pageHeader {
   background-color: #0191c8;
   color: white;
