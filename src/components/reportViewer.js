@@ -52,7 +52,7 @@ export default function ReportViewer() {
       rowHeight: 1,
       title: 'Users Report',
       subTitle: 'By company and age',
-      icon: 'https://www.freeiconspng.com/thumbs/report-icon/call-report-icon-3.png'
+      icon: 'https://cloudpass.azureedge.net/images/report-icon-delivery.png'
     },
     {
       type: 'pageHeader',
@@ -203,11 +203,11 @@ export default function ReportViewer() {
                   <>
                     {table.rows.map((row) => (
                       <>
-                        <tr style={{ height: table.rowHeight + 'cm' }}>
+                        <tr className={table.type+'_row'} style={{ height: table.rowHeight + 'cm' }}>
                           {row.map((cell) => (
                             <td
                               className={cell.className}
-                              colspan={row.colspan}
+                              colspan={cell.colspan}
                             >
                               {cell.text}
                             </td>

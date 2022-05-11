@@ -270,6 +270,7 @@ class Report {
 
       if (dataSetRow && dataSetRow.groupMarker) {
         cell.colspan = columns.length;
+        
         cells.push(cell);
         break;
       }

@@ -98,19 +98,31 @@ table.pageFooter {
   text-align: right;
 }
 
+.rows_row
+{
+  color:#111;
+}
+
 th {
   text-align: left;
   padding: 0 10px;
-  font-size: larger;
-  border-bottom: solid 1px #ccc;
+  font-size: normal;
+  background-color: #0191c8;
+  color:white;
+  /* border-bottom: solid 1px #0191c8; */
 }
 
 td {
   padding: 0 10px;
 }
 
+tr.rows_row:nth-child(odd){
+  background-color: #efefef;
+  /* color: #fff; */
+}
+
 .GroupHeader {
-  font-weight: bold;
+  /* font-weight: bold; */
 }
 
 p {
