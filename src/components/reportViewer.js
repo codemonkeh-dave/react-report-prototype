@@ -182,12 +182,24 @@ export default function ReportViewer() {
                           style={{ height: table.rowHeight + 'cm' }}
                         >
                           {row.map((cell) => (
-                            <td
-                              className={cell.className}
-                              colspan={cell.colspan}
-                            >
-                              {cell.text}
-                            </td>
+                            <>
+                              {cell.empty && (
+                                <>
+                                  <td colspan={table.head.length} className="empty">No data to display</td>
+                                </>
+                              )}
+
+                              {cell.empty != true && (
+                                <>
+                                  <td
+                                    className={cell.className}
+                                    colspan={cell.colspan}
+                                  >
+                                    {cell.text}
+                                  </td>
+                                </>
+                              )}
+                            </>
                           ))}
                         </tr>
                       </>

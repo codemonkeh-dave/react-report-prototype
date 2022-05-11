@@ -45,8 +45,9 @@ class Report {
 
     for (let section of report.sections) {
       console.log(section.rows);
-      if (!section.rows || section.rows.length == 0) section.rows = [[{}]];
-      
+      if (!section.rows || section.rows.length == 0)
+        section.rows = [[{ empty: true }]];
+
       let rowsLeft = section.rows.length;
       let rowsUsed = 0;
       let loopCount = 0;
@@ -57,7 +58,6 @@ class Report {
         currentPage.push(table);
         continue;
       }
-
 
       if (section.rows) {
         while (rowsLeft) {
@@ -97,8 +97,21 @@ class Report {
             rowsUsed,
             rowsUsed + rowsAvailable
           );
-          currentPageHeightRemaining -=
+
+          // if empty use fixed no data size
+          console.log(section.rows[0])
+          if (section.rows[0].length == 1 && (section.rows[0][0]?.empty))
+          {
+            currentPageHeightRemaining -= 3;
+          }
+          else
+          {
+            currentPageHeightRemaining -=
             currentTable.rows.length * section.rowHeight;
+          }
+          
+
+          
           rowsLeft -= currentTable.rows.length;
           rowsUsed += currentTable.rows.length;
           currentPage.push(currentTable);
@@ -273,7 +286,7 @@ class Report {
 
       if (dataSetRow && dataSetRow.groupMarker) {
         cell.colspan = columns.length;
-        
+
         cells.push(cell);
         break;
       }
@@ -333,7 +346,7 @@ class Report {
     let report = this.bindReport(this.reportLayout);
     let pagedReport = this.pageReport(report);
     pagedReport = this.replaceStaticVariables(pagedReport);
-    console.log(pagedReport)
+    console.log(pagedReport);
     return pagedReport;
   }
 }
