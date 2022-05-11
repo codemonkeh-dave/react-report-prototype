@@ -69,6 +69,8 @@ table.pageFooter {
 
 .summaryKey {
   /* font-weight: bold; */
+  width: 1%;
+  white-space: nowrap;
 }
 
 .summaryValue {
@@ -117,12 +119,13 @@ td {
 }
 
 tr.rows_row:nth-child(odd){
-  background-color: #efefef;
+  background-color: #0191c820;
   /* color: #fff; */
 }
 
 .GroupHeader {
   /* font-weight: bold; */
+  border-bottom: solid 1px #ccc;
 }
 
 p {

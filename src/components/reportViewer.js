@@ -18,31 +18,26 @@ export default function ReportViewer() {
       { value: '11:30AM' },
     ],
     dataSet1: [
-      { name: 'Frank1 Smith', groupMarker: true, className: 'GroupHeader' },
-      { name: '1', company: 'ABC1 Ltd', age: 31 },
-      { name: '2', company: 'ABC2 Ltd', age: 32 },
-      { name: '3', company: 'ABC3 Ltd', age: 33 },
-      { name: '4', company: 'ABC4 Ltd', age: 34 },
-      { name: 'Frank1 Smith', groupMarker: true, className: 'GroupHeader' },
-      { name: '1', company: 'ABC1 Ltd', age: 31 },
-      { name: '2', company: 'ABC2 Ltd', age: 32 },
-      { name: '3', company: 'ABC3 Ltd', age: 33 },
-      { name: '4', company: 'ABC4 Ltd', age: 34 },
-      { name: 'Frank1 Smith', groupMarker: true, className: 'GroupHeader' },
-      { name: '1', company: 'ABC1 Ltd', age: 31 },
-      { name: '2', company: 'ABC2 Ltd', age: 32 },
-      { name: '3', company: 'ABC3 Ltd', age: 33 },
-      { name: '4', company: 'ABC4 Ltd', age: 34 },
-      { name: 'Frank1 Smith', groupMarker: true, className: 'GroupHeader' },
-      { name: '1', company: 'ABC1 Ltd', age: 31 },
-      { name: '2', company: 'ABC2 Ltd', age: 32 },
-      { name: '3', company: 'ABC3 Ltd', age: 33 },
-      { name: '4', company: 'ABC4 Ltd', age: 34 },
-      { name: 'Frank1 Smith', groupMarker: true, className: 'GroupHeader' },
-      { name: '1', company: 'ABC1 Ltd', age: 31 },
-      { name: '2', company: 'ABC2 Ltd', age: 32 },
-      { name: '3', company: 'ABC3 Ltd', age: 33 },
-      { name: '4', company: 'ABC4 Ltd', age: 34 },
+      { name: 'Daniel Frain', age: 59 },
+      { name: 'Andrew Smith', company: 'Chichester Electrical Ltd', age: 44 },
+      { name: 'Michell Barnard', company: 'Creative Images', age: 10 },
+      { name: 'Angela Davies', company: 'Creative Images', age: 43 },
+      { name: 'Peter Jones', company: 'Howard Hunt (City) Ltd', age: 54 },
+      { name: 'Andy Atkinson', company: 'CloudPass', age: 7 },
+      { name: 'Sophie Sowerby', company: 'Creative Images', age: 28 },
+      { name: 'Michael Jones', company: 'Chichester Electrical Ltd', age: 11 },
+      { name: 'Ian Jones', company: 'Cheshire Removals & Storage', age: 35 },
+      { name: 'Kelly Wyatt', company: 'Idris & Co Solicitors', age: 8 },
+      { name: 'Tony Argyle', company: 'Cheshire Removals & Storage', age: 12 },
+      { name: 'Sarah Greenwood', company: 'Creative Images', age: 27 },
+      { name: 'Amy Wi', company: 'Creative Images', age: 55 },
+      { name: 'Geoff Hurst', company: 'Cheshire Removals & Storage', age: 23 },
+      { name: 'Emma Smith', company: 'Cheshire Removals & Storage', age: 43 },
+      { name: 'John Sturrock', company: 'Howard Hunt (City) Ltd', age: 53 },
+      { name: 'Marlon Francis', company: 'Chichester Electrical Ltd', age: 49 },
+      { name: 'Joseph Bloggs', company: 'Howard Hunt (City) Ltd', age: 27 },
+      { name: 'Darren Oliver', company: 'CloudPass', age: 39 },
+      { name: 'Joe Smith', company: 'Howard Hunt (City) Ltd', age: 35 },
     ],
   };
 
@@ -52,7 +47,7 @@ export default function ReportViewer() {
       rowHeight: 1,
       title: 'Users Report',
       subTitle: 'By company and age',
-      icon: 'https://cloudpass.azureedge.net/images/report-icon-delivery.png'
+      icon: 'https://cloudpass.azureedge.net/images/report-icon-delivery.png',
     },
     {
       type: 'pageHeader',
@@ -60,18 +55,6 @@ export default function ReportViewer() {
       rowHeight: 1,
       columns: [{ text: '{0}', variables: ['title'] }],
     },
-    {
-      rowHeight: 0.7,
-      noDataHeight: 10,
-      dataSet: 'summaryDataSet',
-      rows: [
-        { key: 'Total Days', className: 'a' },
-        { key: 'Creation Date' },
-        { key: 'Creation Time' },
-        { key: 'Text', text: '{0}', variables: ['title'] },
-      ],
-    },
-
     {
       type: 'summary',
       rowHeight: 0.7,
@@ -83,7 +66,7 @@ export default function ReportViewer() {
         { key: 'Total Days', className: 'a' },
         { key: 'Creation Date' },
         { key: 'Creation Time' },
-        { key: 'Text', text: '{0}', variables: ['title'] },
+        { key: 'Report Title', text: '{0}', variables: ['title'] },
       ],
     },
     {
@@ -128,24 +111,21 @@ export default function ReportViewer() {
         <page className="A4">
           {page.map((table) => (
             <>
-             
-
               {table.type === 'summary' && (
                 <h1 className="summaryTitle">Summary</h1>
               )}
 
-
-              {/* {dump(table.type)} */}
               {table.type === 'reportHeader' && (
                 <>
                   <div class="reportHeader">
-                    <div class="icon"><img src={table.icon}/></div>
+                    <div class="icon">
+                      <img src={table.icon} />
+                    </div>
                     <div class="reportTitles">
-                      <div class="title">{table.title}</div>  
-                      <div class="subTitle">{table.subTitle}</div>  
+                      <div class="title">{table.title}</div>
+                      <div class="subTitle">{table.subTitle}</div>
                     </div>
                   </div>
-
                 </>
               )}
 
@@ -167,8 +147,6 @@ export default function ReportViewer() {
                   </>
                 )}
 
-            
-
                 {table.type == 'summary' && (
                   <>
                     {table.rows.map((row) => (
@@ -176,11 +154,7 @@ export default function ReportViewer() {
                         <tr style={{ height: table.rowHeight + 'cm' }}>
                           {row.map((cell) => (
                             <>
-                              <td
-                                width={200}
-                                className="summaryKey"
-                                colspan={row.colspan}
-                              >
+                              <td className="summaryKey" colspan={row.colspan}>
                                 {cell.text}
                               </td>
                               <td
@@ -203,7 +177,10 @@ export default function ReportViewer() {
                   <>
                     {table.rows.map((row) => (
                       <>
-                        <tr className={table.type+'_row'} style={{ height: table.rowHeight + 'cm' }}>
+                        <tr
+                          className={table.type + '_row'}
+                          style={{ height: table.rowHeight + 'cm' }}
+                        >
                           {row.map((cell) => (
                             <td
                               className={cell.className}
