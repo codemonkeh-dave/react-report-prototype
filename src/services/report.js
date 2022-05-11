@@ -91,7 +91,7 @@ class Report {
           }
 
           let rowsAvailable = Math.floor(
-            (currentPageHeightRemaining / section.rowHeight) * 1.5
+            (currentPageHeightRemaining / section.rowHeight) * 1
           ); //todo: BUG this is calculated wrong and we have to subtract 9
           currentTable.rows = section.rows.slice(
             rowsUsed,

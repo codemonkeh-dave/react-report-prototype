@@ -12,44 +12,40 @@ table.pageFooter {
   width: calc(100% - 20px);
 }
 
-.reportHeader
-{
+.reportHeader {
   height: 2.5cm;
   margin-left: 10px;
-  display:flex;
-  margin-top:.5cm
+  display: flex;
+  margin-top: 0.5cm;
+  border-bottom: solid 1px #ccc;
 }
 
 .reportHeader > .icon > img {
   max-width: 100%;
-  
 }
 
-.reportHeader > .icon
-{
+.reportHeader > .icon {
   /* border:solid 1px red; */
-  height: 3cm;
-  width: 2cm;
+  height: 2cm;
+  width: 1.5cm;
   margin-right: 10px;
 }
 
 .reportHeader .title {
   font-size: x-large;
-  color:#111;
+  color: #111;
 }
 
 .reportHeader .subTitle {
-  color:#333;
+  color: #333;
   font-size: normal;
 }
 
-.reportHeader > .reportTitles
-{
+.reportHeader > .reportTitles {
   display: flex;
-  margin-top:10px;
+  margin-top: 15px;
   flex-direction: column;
 }
-
 
 .pageHeader {
   background-color: #0191c8;
@@ -95,30 +91,32 @@ table.pageFooter {
   border-bottom: solid 1px #ccc;
 }
 
-.pageFooter > tr > td:first-child, .pageHeader > tr > td:first-child {
+.pageFooter > tr > td:first-child,
+.pageHeader > tr > td:first-child {
   width: 25%;
 }
 
-.pageFooter > tr > td:nth-child(2), .pageHeader > tr > td:nth-child(2) {
+.pageFooter > tr > td:nth-child(2),
+.pageHeader > tr > td:nth-child(2) {
   text-align: center;
 }
 
-.pageFooter > tr > td:nth-child(3), .pageHeader > tr > td:nth-child(3) {
+.pageFooter > tr > td:nth-child(3),
+.pageHeader > tr > td:nth-child(3) {
   width: 25%;
   text-align: right;
 }
 
-.rows_row
-{
-  color:#111;
+.rows_row {
+  color: #111;
 }
 
 th {
   text-align: left;
   padding: 0 10px;
   font-size: normal;
-  background-color: #0191c8;
-  color:white;
+  background-color: #434343e3;
+  color: white;
   /* border-bottom: solid 1px #0191c8; */
 }
 
@@ -126,7 +124,7 @@ td {
   padding: 0 10px;
 }
 
-tr.rows_row:nth-child(odd){
+tr.rows_row:nth-child(odd) {
   background-color: #0191c820;
   /* color: #fff; */
 }
@@ -188,6 +186,11 @@ page[size='A5'][layout='landscape'] {
   body,
   page {
     margin: 0;
-    box-shadow: 0;
+    box-shadow: none;
+    page-break-after: always;
+  }
+
+  body {
+    background-color: #fff;
   }
 }
