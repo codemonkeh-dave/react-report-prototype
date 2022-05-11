@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { Report } from '../services/reportService.js';
+import { Report } from '../services/report.js';
 
 export default function ReportViewer() {
   
