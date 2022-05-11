@@ -44,6 +44,9 @@ class Report {
     currentPageHeightRemaining = maxPageHeight;
 
     for (let section of report.sections) {
+      console.log(section.rows);
+      if (!section.rows || section.rows.length == 0) section.rows = [[{}]];
+      
       let rowsLeft = section.rows.length;
       let rowsUsed = 0;
       let loopCount = 0;
@@ -55,7 +58,8 @@ class Report {
         continue;
       }
 
-      if (section.rows && section.rows.length) {
+
+      if (section.rows) {
         while (rowsLeft) {
           let currentTable = {};
 
@@ -142,7 +146,6 @@ class Report {
       // }
       else {
         let table = this.generateTable(section);
-        console.log('section', section, 'table', table);
         report.sections.push(table);
       }
     }
@@ -330,6 +333,7 @@ class Report {
     let report = this.bindReport(this.reportLayout);
     let pagedReport = this.pageReport(report);
     pagedReport = this.replaceStaticVariables(pagedReport);
+    console.log(pagedReport)
     return pagedReport;
   }
 }
