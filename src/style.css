@@ -29,6 +29,24 @@ table.pageFooter {
   color: white;
 }
 
+
+
+.pageFooter > tr > td:first-child
+{
+  width:25%;
+}
+
+.pageFooter > tr > td:nth-child(2)
+{ 
+  text-align: center;
+}
+
+.pageFooter > tr > td:last-child
+{
+  width:25%;
+  text-align: right;
+}
+
 th {
   text-align: left;
   padding: 0 10px;

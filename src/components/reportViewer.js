@@ -3,19 +3,53 @@ import { useEffect, useState } from 'react';
 import { Report } from '../services/report.js';
 
 export default function ReportViewer() {
-  
-
   function dump(input) {
     return JSON.stringify(input, null, 2);
   }
 
   let reportData = {
     variables: {
-      title: 'Test Report',
+      title: 'Report Title',
       date: new Date().toLocaleDateString(),
     },
     dataSet1: [
       { name: 'Frank1 Smith', groupMarker: true, className: 'GroupHeader' },
+      { name: '1', company: 'ABC1 Ltd', age: 31 },
+      { name: '2', company: 'ABC2 Ltd', age: 32 },
+      { name: '3', company: 'ABC3 Ltd', age: 33 },
+      { name: '4', company: 'ABC4 Ltd', age: 34 },
+
+      { name: 'Frank2 Smith', groupMarker: true, className: 'GroupHeader' },
+      { name: '5', company: 'ABC1 Ltd', age: 31 },
+      { name: '6', company: 'ABC2 Ltd', age: 32 },
+      { name: '7', company: 'ABC3 Ltd', age: 33 },
+      { name: '8', company: 'ABC4 Ltd', age: 34 },
+
+      { name: 'Frank2 Smith', groupMarker: true, className: 'GroupHeader' },
+      { name: '9', company: 'ABC1 Ltd', age: 31 },
+      { name: '10', company: 'ABC2 Ltd', age: 32 },
+      { name: '11', company: 'ABC3 Ltd', age: 33 },
+      { name: '12', company: 'ABC4 Ltd', age: 34 },
+
+      { name: 'Frank2 Smith', groupMarker: true, className: 'GroupHeader' },
+      { name: '13', company: 'ABC1 Ltd', age: 31 },
+      { name: '14', company: 'ABC2 Ltd', age: 32 },
+      { name: '15', company: 'ABC3 Ltd', age: 33 },
+      { name: '16', company: 'ABC4 Ltd', age: 34 },
+
+      { name: 'Frank2 Smith', groupMarker: true, className: 'GroupHeader' },
+      { name: '17', company: 'ABC1 Ltd', age: 31 },
+      { name: '18', company: 'ABC2 Ltd', age: 32 },
+      { name: '19', company: 'ABC3 Ltd', age: 33 },
+      { name: '20', company: 'ABC4 Ltd', age: 34 },
+
+      { name: 'Frank2 Smith', groupMarker: true, className: 'GroupHeader' },
+      { name: '21', company: 'ABC1 Ltd', age: 31 },
+      { name: '22', company: 'ABC2 Ltd', age: 32 },
+      { name: '23', company: 'ABC3 Ltd', age: 33 },
+      { name: '24', company: 'ABC4 Ltd', age: 34 },
+
+      { name: 'Frank2 Smith', groupMarker: true, className: 'GroupHeader' },
       { name: 'Frank1', company: 'ABC1 Ltd', age: 31 },
       { name: 'Frank2', company: 'ABC2 Ltd', age: 32 },
       { name: 'Frank3', company: 'ABC3 Ltd', age: 33 },
@@ -26,6 +60,20 @@ export default function ReportViewer() {
       { name: 'Frank2', company: 'ABC2 Ltd', age: 32 },
       { name: 'Frank3', company: 'ABC3 Ltd', age: 33 },
       { name: 'Frank4', company: 'ABC4 Ltd', age: 34 },
+
+      { name: 'Frank2 Smith', groupMarker: true, className: 'GroupHeader' },
+      { name: 'Frank1', company: 'ABC1 Ltd', age: 31 },
+      { name: 'Frank2', company: 'ABC2 Ltd', age: 32 },
+      { name: 'Frank3', company: 'ABC3 Ltd', age: 33 },
+      { name: 'Frank4', company: 'ABC4 Ltd', age: 34 },
+
+      { name: 'Frank2 Smith', groupMarker: true, className: 'GroupHeader' },
+      { name: 'Frank1', company: 'ABC1 Ltd', age: 31 },
+      { name: 'Frank2', company: 'ABC2 Ltd', age: 32 },
+      { name: 'Frank3', company: 'ABC3 Ltd', age: 33 },
+      { name: 'Frank4', company: 'ABC4 Ltd', age: 34 },
+
+
     ],
   };
 
@@ -33,11 +81,11 @@ export default function ReportViewer() {
     {
       type: 'pageHeader',
       className: 'pageHeader',
-      rowHeight: 1,
-      columns: [{ header: 'Test', text: '{0}', variables: ['title'] }],
+      rowHeight: 1.5,
+      columns: [{ text: '{0}', variables: ['title'] }],
     },
     {
-      rowHeight: 1,
+      rowHeight: .7,
       noDataHeight: 10,
       dataSet: 'dataSet1',
       columns: [
@@ -52,11 +100,13 @@ export default function ReportViewer() {
       rowHeight: 1,
       columns: [
         {
-          header: null,
           text: 'Page {0} of {1}',
           variables: ['pageNumber', 'pageCount'],
         },
-        { header: null, text: 'Report generated {0}', variables: ['date'] },
+        { text: 'Report generated {0}', variables: ['date'] },
+        {
+          text: ''
+        }
       ],
     },
   ];
@@ -64,7 +114,6 @@ export default function ReportViewer() {
   const [pagedReport, setPagedReport] = useState([]);
 
   useEffect(() => {
-
     const staticVariables = ['pageNumber', 'pageCount'];
     let report = new Report(reportLayout, reportData, staticVariables);
 
@@ -72,16 +121,15 @@ export default function ReportViewer() {
 
     setPagedReport(builtReport);
 
-  
     // setPagedReport(pagedReport);
     // console.log(JSON.stringify(newPagedReport, null, '  '));
   }, []);
 
   return (
     <>
-      <page className="A4 landscape">
-        {pagedReport.map((page) =>
-          page.map((table) => (
+      {pagedReport.map((page) => (
+        <page className="A4 landscape">
+          {page.map((table) => (
             <table cellspacing="0" className={table.className}>
               {table.head && (
                 <>
@@ -103,9 +151,9 @@ export default function ReportViewer() {
                 </tr>
               ))}
             </table>
-          ))
-        )}
-      </page>
+          ))}
+        </page>
+      ))}
     </>
   );
 }

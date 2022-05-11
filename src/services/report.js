@@ -51,6 +51,7 @@ class Report {
       let loopCount = 0;
       if (section.rows && section.rows.length) {
         while (rowsLeft) {
+          
           let currentTable = {};
 
           loopCount++;
@@ -68,18 +69,20 @@ class Report {
             currentPageHeightRemaining -= section.rowHeight;
           }
           let rowsAvailable = Math.floor(
-            currentPageHeightRemaining / section.rowHeight
-          );
+            currentPageHeightRemaining / section.rowHeight * 0.67
+          ); //todo: BUG this is calculated wrong and we have to subtract 9
           currentTable.rows = section.rows.slice(
             rowsUsed,
             rowsUsed + rowsAvailable
           );
-          currentPageHeightRemaining -=
+          currentPageHeightRemaining -= 
             currentTable.rows.length * section.rowHeight;
           rowsLeft -= currentTable.rows.length;
           rowsUsed += currentTable.rows.length;
 
           currentPage.push(currentTable);
+          console.log('rowsUsed', rowsUsed);
+          console.log('rowsLeft', rowsLeft);
           if (rowsLeft) {
             console.log(
               'NEW PAGE',
@@ -255,7 +258,9 @@ class Report {
   {
     console.log(this.reportLayout);
     let report = this.bindReport(this.reportLayout);
+    
     let pagedReport = this.pageReport(report);
+    console.log(">>",pagedReport);
     pagedReport = this.replaceStaticVariables(pagedReport);
     return pagedReport;
 
