@@ -48,20 +48,39 @@ export default function ReportViewer() {
 
   let reportLayout = [
     {
+      type: 'reportHeader',
+      rowHeight: 1,
+      title: 'Users Report',
+      subTitle: 'By company and age',
+      icon: 'https://www.freeiconspng.com/thumbs/report-icon/call-report-icon-3.png'
+    },
+    {
       type: 'pageHeader',
       className: 'pageHeader',
-      rowHeight: 1.5,
+      rowHeight: 1,
       columns: [{ text: '{0}', variables: ['title'] }],
     },
     {
-      type: 'summary',
       rowHeight: 0.7,
-      marginTop: 5,
-      marginBottom: 5,
       noDataHeight: 10,
       dataSet: 'summaryDataSet',
       rows: [
-        { key: 'Total Days', className: 'a'},
+        { key: 'Total Days', className: 'a' },
+        { key: 'Creation Date' },
+        { key: 'Creation Time' },
+        { key: 'Text', text: '{0}', variables: ['title'] },
+      ],
+    },
+
+    {
+      type: 'summary',
+      rowHeight: 0.7,
+      marginTop: 0.2,
+      marginBottom: 0.2,
+      noDataHeight: 10,
+      dataSet: 'summaryDataSet',
+      rows: [
+        { key: 'Total Days', className: 'a' },
         { key: 'Creation Date' },
         { key: 'Creation Time' },
         { key: 'Text', text: '{0}', variables: ['title'] },
@@ -105,65 +124,101 @@ export default function ReportViewer() {
 
   return (
     <>
-      {pagedReport.map((page) => (
-        <page className="A4 landscape">
+      {pagedReport.map((page, index) => (
+        <page className="A4">
           {page.map((table) => (
-            <table cellspacing="0" className={table.className}>
-              {table.head && (
+            <>
+             
+
+              {table.type === 'summary' && (
+                <h1 className="summaryTitle">Summary</h1>
+              )}
+
+
+              {/* {dump(table.type)} */}
+              {table.type === 'reportHeader' && (
                 <>
-                  <tr style={{ height: table.rowHeight + 'cm' }}>
-                    {table.head.map((cell) => (
-                      <th>{cell}</th>
-                    ))}
-                  </tr>
+                  <div class="reportHeader">
+                    <div class="icon"><img src={table.icon}/></div>
+                    <div class="reportTitles">
+                      <div class="title">{table.title}</div>  
+                      <div class="subTitle">{table.subTitle}</div>  
+                    </div>
+                  </div>
+
                 </>
               )}
-              {table.type == 'summary' && (
-                <>
-                  {table.rows.map((row) => (
-                    <>
-                      <tr style={{ height: table.rowHeight + 'cm' }}>
-                        {row.map((cell) => (
-                          <>
+
+              <table
+                cellspacing="0"
+                className={table.className}
+                style={{
+                  marginTop: table.marginTop + 'cm',
+                  marginBottom: table.marginBottom + 'cm',
+                }}
+              >
+                {table.head && (
+                  <>
+                    <tr style={{ height: table.rowHeight + 'cm' }}>
+                      {table.head.map((cell) => (
+                        <th>{cell}</th>
+                      ))}
+                    </tr>
+                  </>
+                )}
+
+            
+
+                {table.type == 'summary' && (
+                  <>
+                    {table.rows.map((row) => (
+                      <>
+                        <tr style={{ height: table.rowHeight + 'cm' }}>
+                          {row.map((cell) => (
+                            <>
+                              <td
+                                width={200}
+                                className="summaryKey"
+                                colspan={row.colspan}
+                              >
+                                {cell.text}
+                              </td>
+                              <td
+                                className="summaryValue"
+                                colspan={row.colspan}
+                              >
+                                {cell.value}
+                              </td>
+                            </>
+                          ))}
+                        </tr>
+                      </>
+                    ))}
+                  </>
+                )}
+
+                {(table.type === 'rows' ||
+                  table.type === 'pageFooter' ||
+                  table.type === 'pageHeader') && (
+                  <>
+                    {table.rows.map((row) => (
+                      <>
+                        <tr style={{ height: table.rowHeight + 'cm' }}>
+                          {row.map((cell) => (
                             <td
-                              width={200}
                               className={cell.className}
                               colspan={row.colspan}
                             >
                               {cell.text}
                             </td>
-                            <td
-                              className={cell.className}
-                              colspan={row.colspan}
-                            >
-                              {cell.value}
-                            </td>
-                          </>
-                        ))}
-                      </tr>
-                    </>
-                  ))}
-                </>
-              )}
-
-              {(table.type === 'rows' ||
-                table.type === 'pageFooter' ||
-                table.type === 'pageHeader') && (
-                <>
-                  {table.rows.map((row) => (
-                    <>
-                      <tr style={{ height: table.rowHeight + 'cm' }}>
-                        {row.map((cell) => (
-                          <td className={cell.className} colspan={row.colspan}>
-                            {cell.text}
-                          </td>
-                        ))}
-                      </tr>
-                    </>
-                  ))}
-                </>
-              )}
-            </table>
+                          ))}
+                        </tr>
+                      </>
+                    ))}
+                  </>
+                )}
+              </table>
+            </>
           ))}
         </page>
       ))}

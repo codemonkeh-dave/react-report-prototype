@@ -47,6 +47,14 @@ class Report {
       let rowsLeft = section.rows.length;
       let rowsUsed = 0;
       let loopCount = 0;
+
+      if (section.type === 'reportHeader') {
+        currentPageHeightRemaining -= 4;
+        let table = this.generateTable(section);
+        currentPage.push(table);
+        continue;
+      }
+
       if (section.rows && section.rows.length) {
         while (rowsLeft) {
           let currentTable = {};
@@ -56,7 +64,7 @@ class Report {
 
           currentTable = JSON.parse(JSON.stringify(section));
           if (section.title) {
-            currentTable.title.text = bindDataIntoCellText(
+            currentTable.title.text = this.bindDataIntoCellText(
               currentTable.title.text,
               currentTable.title.variables
             );
@@ -65,8 +73,21 @@ class Report {
           if (section.head) {
             currentPageHeightRemaining -= section.rowHeight;
           }
+
+          if (section.marginBottom) {
+            currentPageHeightRemaining -= section.marginBottom;
+          }
+
+          if (section.marginTop) {
+            currentPageHeightRemaining -= section.marginTop;
+          }
+
+          if (section.type === 'summary') {
+            currentPageHeightRemaining -= 1; // summary title
+          }
+
           let rowsAvailable = Math.floor(
-            (currentPageHeightRemaining / section.rowHeight) * 0.67
+            (currentPageHeightRemaining / section.rowHeight) * 1.5
           ); //todo: BUG this is calculated wrong and we have to subtract 9
           currentTable.rows = section.rows.slice(
             rowsUsed,
@@ -120,7 +141,9 @@ class Report {
       //   report.summary = this.generateTable(section);
       // }
       else {
-        report.sections.push(this.generateTable(section));
+        let table = this.generateTable(section);
+        console.log('section', section, 'table', table);
+        report.sections.push(table);
       }
     }
     return report;
@@ -129,6 +152,8 @@ class Report {
   generateTable(section) {
     let table = {
       title: section.title,
+      subTitle: section.subTitle,
+      icon: section.icon,
       noData: section.noData,
       className: section.className,
       staticHeight: 0,
@@ -139,7 +164,8 @@ class Report {
 
     let showHeader = false;
 
-    if (section.type === 'summary') section.columns = [];
+    if (!section.columns) section.columns = [];
+    if (!section.rows) section.rows = [];
 
     for (let column of section.columns) {
       if (column.header) {
@@ -152,14 +178,14 @@ class Report {
 
     if (section.type === 'summary') {
       let i = 0;
-      for (let row of section.rows)
-      {
+      for (let row of section.rows) {
         let boundRow = this.renderSummaryRow(row, section, i);
         table.rows.push(boundRow);
         i++;
       }
-    }
-    else{
+    } else if (section.type === 'reportHeader') {
+      // table.rows.push([[{ title: 'hello' }]]);
+    } else {
       if (section.dataSet) {
         for (let dataSetRow of this.reportData[section.dataSet]) {
           let row = this.renderRow(section.columns, dataSetRow);
@@ -185,37 +211,38 @@ class Report {
     }
 
     table.type = section.type;
+
+    table.marginTop = section.marginTop ?? 0;
+    table.marginBottom = section.marginBottom ?? 0;
+
     return table;
   }
 
   renderSummaryRow(row, section, rowId) {
-    let value = "";
+    let value = '';
     let cell = {};
 
-    if (section.dataSet)
-    {
-      if (this.reportData[section.dataSet] && this.reportData[section.dataSet][rowId])
-      {
+    if (section.dataSet) {
+      if (
+        this.reportData[section.dataSet] &&
+        this.reportData[section.dataSet][rowId]
+      ) {
         value = this.reportData[section.dataSet][rowId].value ?? '';
+      } else {
+        if (row.variables) {
+          value = this.bindDataIntoCellText(row.text, row.variables);
+        }
       }
-      else
-      {
-        if (row.variables)
-          {
-            value = this.bindDataIntoCellText(row.text, row.variables);
-          }
-      } 
     }
 
     cell.text = row.key;
-    cell.value = value,
-    cell.className = row.className;
+    (cell.value = value), (cell.className = row.className);
 
     if (this.hasStaticVariables(row.variables)) {
       cell.hasStaticVariables = true;
     }
 
-    return [cell]
+    return [cell];
   }
 
   renderRow(columns, dataSetRow) {
@@ -299,11 +326,8 @@ class Report {
   }
 
   build() {
-    console.log(this.reportLayout);
     let report = this.bindReport(this.reportLayout);
-
     let pagedReport = this.pageReport(report);
-    console.log('>>', pagedReport);
     pagedReport = this.replaceStaticVariables(pagedReport);
     return pagedReport;
   }
