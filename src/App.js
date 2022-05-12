@@ -25,7 +25,7 @@ export default function App() {
         marginTop: 0.2,
         marginBottom: 0.5,
         noDataHeight: 10,
-        dataSet: 'summaryDataSet',
+        dataSet: 'summaryDataSet1',
         rows: [
           { key: 'Total Days', className: 'a' },
           { key: 'Creation Date' },
@@ -37,7 +37,7 @@ export default function App() {
         type: 'rows',
         rowHeight: 1,
         noDataHeight: 10,
-        dataSet: 'dataSet12',
+        dataSet: 'dataSet1',
         columns: [
           { header: 'Name', dataSetKey: 'name', className: 'Name' },
           { header: 'Company', dataSetKey: 'company' },

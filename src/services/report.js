@@ -98,16 +98,13 @@ class Report {
           );
 
           // if empty use fixed no data size
-          if (section.rows[0].length == 1 && (section.rows[0][0]?.empty))
-          {
+          if (section.rows[0].length == 1 && section.rows[0][0]?.empty) {
             currentPageHeightRemaining -= 3;
-          }
-          else
-          {
+          } else {
             currentPageHeightRemaining -=
-            currentTable.rows.length * section.rowHeight;
+              currentTable.rows.length * section.rowHeight;
           }
-          
+
           rowsLeft -= currentTable.rows.length;
           rowsUsed += currentTable.rows.length;
           currentPage.push(currentTable);
@@ -149,8 +146,7 @@ class Report {
         report.pageHeader = this.generateTable(section);
       } else if (section.type == 'pageFooter') {
         report.pageFooter = this.generateTable(section);
-      }
-      else {
+      } else {
         let table = this.generateTable(section);
         report.sections.push(table);
       }
@@ -197,18 +193,19 @@ class Report {
       // table.rows.push([[{ title: 'hello' }]]);
     } else {
       if (section.dataSet) {
-        if (!(this.reportData[section.dataSet] && this.reportData[section.dataSet].length))
-        {
-          console.error(`Missing report dataset '${section.dataSet}'`)
-        }
-        else
-        {
+        if (
+          !(
+            this.reportData[section.dataSet] &&
+            this.reportData[section.dataSet].length
+          )
+        ) {
+          console.error(`Missing or empty report dataset '${section.dataSet}'`);
+        } else {
           for (let dataSetRow of this.reportData[section.dataSet]) {
             let row = this.renderRow(section.columns, dataSetRow);
             table.rows.push(row);
           }
         }
-        
       } else {
         let row = this.renderRow(section.columns, null);
         table.rows.push(row);
@@ -241,6 +238,15 @@ class Report {
     let cell = {};
 
     if (section.dataSet) {
+      if (
+        !(
+          this.reportData[section.dataSet] &&
+          this.reportData[section.dataSet].length
+        )
+      ) {
+        console.error(`Missing or empty report dataset '${section.dataSet}'`);
+      }
+
       if (
         this.reportData[section.dataSet] &&
         this.reportData[section.dataSet][rowId]
@@ -277,8 +283,7 @@ class Report {
 
       cellContents = this.bindDataIntoCellText(cellContents, column.variables);
       let cell = { text: cellContents };
-      if (column.hideWhenLoading)
-      {
+      if (column.hideWhenLoading) {
         cell.hideWhenLoading = true;
       }
 
@@ -291,11 +296,10 @@ class Report {
 
       if (this.hasStaticVariables(column.variables)) {
         cell.hasStaticVariables = true;
-      }     
+      }
 
       if (dataSetRow && dataSetRow.groupMarker) {
         cell.colspan = columns.length;
-
         cells.push(cell);
         break;
       }
