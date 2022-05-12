@@ -85,6 +85,31 @@ export default function ReportViewer({ layout, data, isLoading, error }) {
                   </>
                 )}
 
+                {table.type == 'imageChart' && (
+                  <>
+                    {table.rows.map((row) => (
+                      <>
+                        {dump(table)}
+                        <tr style={{ height: table.rowHeight + 'cm' }}>
+                          {/* {row.map((cell) => ( */}
+                             {/* <> */}
+                              {/* <td className="summaryKey" colspan={row.colspan}>
+                                {cell.text}
+                              </td>
+                              <td
+                                className="summaryValue"
+                                colspan={row.colspan}
+                              >
+                                {cell.value}
+                              </td> */}
+                            {/* </> */}
+                          {/* ))} */}
+                        </tr>
+                      </>
+                    ))}
+                  </>
+                )}
+
                 {(table.type === 'rows' ||
                   table.type === 'pageFooter' ||
                   table.type === 'pageHeader') && (

@@ -164,6 +164,7 @@ class Report {
       staticHeight: 0,
       rowHeight: section.rowHeight,
       emptyMessage: section.emptyMessage,
+      url:section.url,
       head: [],
       rows: [],
     };
