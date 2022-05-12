@@ -3,7 +3,6 @@ import GenericReport from './reports/genericReport.js';
 import './style.css';
 
 export default function App() {
-
   const reportObj = {
     layout: [
       {
@@ -25,7 +24,7 @@ export default function App() {
         marginTop: 0.2,
         marginBottom: 0.5,
         noDataHeight: 10,
-        dataSet: 'summaryDataSet1',
+        dataSet: 'summaryDataSet',
         rows: [
           { key: 'Total Days', className: 'a' },
           { key: 'Creation Date' },
@@ -96,8 +95,8 @@ export default function App() {
         // { name: 'Joe Smith', company: 'Howard Hunt (City) Ltd', age: 35 },
       ],
     },
-    apiEndpoint: 'https://eolnbeduw5sicf9.m.pipedream.net/'
-  }
+    apiEndpoint: 'https://eolnbeduw5sicf9.m.pipedream.net/',
+  };
 
   return <GenericReport reportDefinition={reportObj} />;
 }
