@@ -12,13 +12,6 @@ export default function App() {
         icon: 'https://cloudpass.azureedge.net/images/report-icon-delivery.png',
       },
       {
-        type: 'imageChart',
-        rowHeight: 1,
-        staticHeight: 9,
-        dataSet: 'userReportData',
-        chartUrl: 'https://image-charts.com/chart?chbr=20&chco=CFECF7%2C27c9c2&chdl=N%7CN-1&chdlp=r&chl=10%7C50%7C60%7C80%7C40%7C50%7C60%7C100%7C40%7C20&chs=999x450&cht=bvs&chtt=Revenue%20per%20month&chxt=x%2Cy'
-      },
-      {
         type: 'pageHeader',
         className: 'pageHeader',
         rowHeight: 1,
@@ -28,7 +21,7 @@ export default function App() {
         type: 'summary',
         className: 'hello',
         rowHeight: 0.7,
-        marginTop: 0.2,
+        marginTop: 0.5,
         marginBottom: 0.5,
         noDataHeight: 10,
         dataSet: 'summaryDataSet',
@@ -38,6 +31,15 @@ export default function App() {
           { key: 'Creation Time' },
           { key: 'Report Title', text: '{0}', variables: ['title'] },
         ],
+      },
+      {
+        type: 'imageChart',
+        rowHeight: 1,
+        staticHeight: 8,
+        
+        title: "Users by month",
+        dataSet: 'userReportData',
+        chartUrl: 'https://image-charts.com/chart?chbr=20&chco=0191c8&chdlp=r&chs=650x300&cht=bvs&chtt=&chxt=x%2Cy'
       },
       {
         type: 'rows',

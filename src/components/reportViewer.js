@@ -89,25 +89,21 @@ export default function ReportViewer({ layout, data, isLoading, error }) {
                   <>
                     {table.rows.map((row) => (
                       <>
-                        <tr style={{ height: table.staticHeight + 'cm' }}>
+                        <tr>
                           <td>
-                            <div className='imageChart'>
-                              <img src={row[0]?.chartUrl ?? ''} style={{maxHeight:table.staticHeight + 'cm' }} />
+                            <h1 className="title" style={{ marginBottom: '.5cm' }}>{table.title}</h1>
+                            <div className='imageChart' style={{ height: table.staticHeight + 'cm', position: 'relative' }}>
+                              {!isLoading && (
+                                <>
+                                  <img src={row[0]?.chartUrl ?? ''} style={{ maxHeight: table.staticHeight + 'cm', position: 'relative', top: '50%', transform: 'translateY(-50%)' }} />
+                                </>
+                              )}
+                              {isLoading && (
+                                <p>Loading Chart...</p>
+                              )}
+
                             </div>
                           </td>
-                          {/* {row.map((cell) => ( */}
-                          {/* <> */}
-                          {/* <td className="summaryKey" colspan={row.colspan}>
-                                {cell.text}
-                              </td>
-                              <td
-                                className="summaryValue"
-                                colspan={row.colspan}
-                              >
-                                {cell.value}
-                              </td> */}
-                          {/* </> */}
-                          {/* ))} */}
                         </tr>
                       </>
                     ))}

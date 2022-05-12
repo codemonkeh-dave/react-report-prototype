@@ -52,7 +52,7 @@ class Report {
       let loopCount = 0;
 
       if (section.type === 'reportHeader') {
-        currentPageHeightRemaining -= 4;
+        currentPageHeightRemaining -= 3;
         let table = this.generateTable(section);
         currentPage.push(table);
         continue;
@@ -66,7 +66,7 @@ class Report {
           if (loopCount > 100) break;
 
           currentTable = JSON.parse(JSON.stringify(section));
-          if (section.title) {
+          if (section.title && section.title.text) {
             currentTable.title.text = this.bindDataIntoCellText(
               currentTable.title.text,
               currentTable.title.variables
@@ -90,11 +90,15 @@ class Report {
           }
 
           if (section.type === 'imageChart') {
+            console.log(currentPageHeightRemaining)
             currentPageHeightRemaining -= section.staticHeight
+            console.log(currentPageHeightRemaining)
+            
+            console.log(currentPageHeightRemaining)
           }
 
           let rowsAvailable = Math.floor(
-            (currentPageHeightRemaining / section.rowHeight) * 1
+            (currentPageHeightRemaining / section.rowHeight)
           ); //todo: BUG this is calculated wrong and we have to subtract 9
           currentTable.rows = section.rows.slice(
             rowsUsed,
