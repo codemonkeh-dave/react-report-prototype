@@ -1,7 +1,6 @@
 import React from 'react';
 import GenericReport from './reports/genericReport.js';
 import './style.css';
-import { useEffect, useState } from 'react';
 
 export default function App() {
 
@@ -38,7 +37,7 @@ export default function App() {
         type: 'rows',
         rowHeight: 1,
         noDataHeight: 10,
-        dataSet: 'dataSet1',
+        dataSet: 'dataSet12',
         columns: [
           { header: 'Name', dataSetKey: 'name', className: 'Name' },
           { header: 'Company', dataSetKey: 'company' },

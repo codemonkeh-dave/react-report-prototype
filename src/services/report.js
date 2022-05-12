@@ -197,10 +197,18 @@ class Report {
       // table.rows.push([[{ title: 'hello' }]]);
     } else {
       if (section.dataSet) {
-        for (let dataSetRow of this.reportData[section.dataSet]) {
-          let row = this.renderRow(section.columns, dataSetRow);
-          table.rows.push(row);
+        if (!(this.reportData[section.dataSet] && this.reportData[section.dataSet].length))
+        {
+          console.error(`Missing report dataset '${section.dataSet}'`)
         }
+        else
+        {
+          for (let dataSetRow of this.reportData[section.dataSet]) {
+            let row = this.renderRow(section.columns, dataSetRow);
+            table.rows.push(row);
+          }
+        }
+        
       } else {
         let row = this.renderRow(section.columns, null);
         table.rows.push(row);
