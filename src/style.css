@@ -83,6 +83,23 @@ table.pageFooter {
   margin-top: 0.2cm;
 }
 
+.imageChart
+{
+  /* border:solid 1px red; */
+ 
+  overflow:hidden;
+  /* border: solid 1px red; */
+  text-align: center;
+}
+
+.imageChart > img
+{
+  /* border:solid 1px red; */
+  max-width: 100%;
+  
+  
+}
+
 .checkbox {
   height: 20px;
   width: 20px;

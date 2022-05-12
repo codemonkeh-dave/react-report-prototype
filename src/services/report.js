@@ -89,6 +89,10 @@ class Report {
             currentPageHeightRemaining -= 1; // summary title
           }
 
+          if (section.type === 'imageChart') {
+            currentPageHeightRemaining -= section.staticHeight
+          }
+
           let rowsAvailable = Math.floor(
             (currentPageHeightRemaining / section.rowHeight) * 1
           ); //todo: BUG this is calculated wrong and we have to subtract 9
@@ -161,10 +165,10 @@ class Report {
       icon: section.icon,
       noData: section.noData,
       className: section.className,
-      staticHeight: 0,
+      staticHeight: section.staticHeight,
       rowHeight: section.rowHeight,
       emptyMessage: section.emptyMessage,
-      url:section.url,
+      url: section.url,
       head: [],
       rows: [],
     };
@@ -190,7 +194,11 @@ class Report {
         table.rows.push(boundRow);
         i++;
       }
-    } else if (section.type === 'reportHeader') {
+    } else if (section.type === 'imageChart') {
+      let boundRow = this.renderImageChartRow(section);
+      table.rows.push(boundRow);
+    }
+    else if (section.type === 'reportHeader') {
       // table.rows.push([[{ title: 'hello' }]]);
     } else {
       if (section.dataSet) {
@@ -216,7 +224,7 @@ class Report {
     if (showHeader) {
       table.staticHeight = section.rowHeight;
     } else {
-      table.staticHeight = 0;
+      table.staticHeight = section.staticHeight || 0;
       delete table.head;
     }
 
@@ -234,10 +242,23 @@ class Report {
     return table;
   }
 
+  renderImageChartRow(section) {
+    const chartUrl = section.chartUrl;
+    let chartData = "";
+    console.log('section', section)
+    console.log('here', this.reportData[section.dataSet] )
+    if (!this.reportData[section.dataSet])
+      console.error(`Missing or empty report dataset '${section.dataSet}'`)
+    else
+      chartData = this.reportData[section.dataSet];
+
+
+    return [{ chartUrl: `${chartUrl}${chartData}` }];
+  }
+
   renderSummaryRow(row, section, rowId) {
     let value = '';
     let cell = {};
-
     if (section.dataSet) {
       if (
         !(

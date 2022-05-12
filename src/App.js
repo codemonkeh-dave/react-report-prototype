@@ -14,8 +14,9 @@ export default function App() {
       {
         type: 'imageChart',
         rowHeight: 1,
-        staticHeight: 10,
-        url: 'https://editor.image-charts.com/?tab_editor=gallery#https:/image-charts.com/chart?chbr=20&chco=CFECF7%2C27c9c2&chd=a%3A10000%2C50000%2C60000%2C80000%2C40000%7C50000%2C60000%2C100000%2C40000%2C20000&chdl=N%7CN-1&chdlp=r&chl=10%7C50%7C60%7C80%7C40%7C50%7C60%7C100%7C40%7C20&chs=700x450&cht=bvs&chtt=Revenue%20per%20month&chxl=0%3A%7CJan%7CFev%7CMar%7CAvr%7CMay&chxs=1N%2AcUSD0sz%2A%2C000000%2C14&chxt=x%2Cy',
+        staticHeight: 9,
+        dataSet: 'userReportData',
+        chartUrl: 'https://image-charts.com/chart?chbr=20&chco=CFECF7%2C27c9c2&chdl=N%7CN-1&chdlp=r&chl=10%7C50%7C60%7C80%7C40%7C50%7C60%7C100%7C40%7C20&chs=999x450&cht=bvs&chtt=Revenue%20per%20month&chxt=x%2Cy'
       },
       {
         type: 'pageHeader',

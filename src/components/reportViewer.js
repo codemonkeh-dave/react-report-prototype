@@ -84,16 +84,20 @@ export default function ReportViewer({ layout, data, isLoading, error }) {
                     ))}
                   </>
                 )}
-
+                {/* {dump(table)} */}
                 {table.type == 'imageChart' && (
                   <>
                     {table.rows.map((row) => (
                       <>
-                        {dump(table)}
-                        <tr style={{ height: table.rowHeight + 'cm' }}>
+                        <tr style={{ height: table.staticHeight + 'cm' }}>
+                          <td>
+                            <div className='imageChart'>
+                              <img src={row[0]?.chartUrl ?? ''} style={{maxHeight:table.staticHeight + 'cm' }} />
+                            </div>
+                          </td>
                           {/* {row.map((cell) => ( */}
-                             {/* <> */}
-                              {/* <td className="summaryKey" colspan={row.colspan}>
+                          {/* <> */}
+                          {/* <td className="summaryKey" colspan={row.colspan}>
                                 {cell.text}
                               </td>
                               <td
@@ -102,7 +106,7 @@ export default function ReportViewer({ layout, data, isLoading, error }) {
                               >
                                 {cell.value}
                               </td> */}
-                            {/* </> */}
+                          {/* </> */}
                           {/* ))} */}
                         </tr>
                       </>
@@ -113,66 +117,66 @@ export default function ReportViewer({ layout, data, isLoading, error }) {
                 {(table.type === 'rows' ||
                   table.type === 'pageFooter' ||
                   table.type === 'pageHeader') && (
-                  <>
-                    {table.rows.map((row) => (
-                      <>
-                        <tr
-                          className={table.type + '_row'}
-                          style={{ height: table.rowHeight + 'cm' }}
-                        >
-                          {row.map((cell) => (
-                            <>
-                              {cell.empty && !isLoading && (
-                                <>
-                                  <td
-                                    colspan={table.head.length}
-                                    className="empty"
-                                  >
-                                    {table.emptyMessage ?? 'No data to display'}
-                                  </td>
-                                </>
-                              )}
+                    <>
+                      {table.rows.map((row) => (
+                        <>
+                          <tr
+                            className={table.type + '_row'}
+                            style={{ height: table.rowHeight + 'cm' }}
+                          >
+                            {row.map((cell) => (
+                              <>
+                                {cell.empty && !isLoading && (
+                                  <>
+                                    <td
+                                      colspan={table.head.length}
+                                      className="empty"
+                                    >
+                                      {table.emptyMessage ?? 'No data to display'}
+                                    </td>
+                                  </>
+                                )}
 
-                              {table.type === 'rows' && isLoading && (
-                                <>
-                                  <td
-                                    colSpan={table?.head?.length}
-                                    className="empty"
-                                  >
-                                    Loading...
-                                  </td>
-                                </>
-                              )}
+                                {table.type === 'rows' && isLoading && (
+                                  <>
+                                    <td
+                                      colSpan={table?.head?.length}
+                                      className="empty"
+                                    >
+                                      Loading...
+                                    </td>
+                                  </>
+                                )}
 
-                              {cell.empty != true && (
-                                <>
-                                  <td
-                                    className={cell.className}
-                                    colspan={cell.colspan}
-                                  >
-                                    {!(cell.hideWhenLoading && isLoading) && (
-                                      <>
-                                        {cell.type === 'checkbox' && (
-                                          <>
-                                            <div className="checkbox">
-                                              <input type="checkbox" />
-                                            </div>
-                                            {/* <div className="checkbox" /> */}
-                                          </>
-                                        )}
-                                        {cell.type == null && <>{cell.text}</>}
-                                      </>
-                                    )}
-                                  </td>
-                                </>
-                              )}
-                            </>
-                          ))}
-                        </tr>
-                      </>
-                    ))}
-                  </>
-                )}
+                                {cell.empty != true && (
+                                  <>
+                                    <td
+                                      className={cell.className}
+                                      colspan={cell.colspan}
+                                    >
+                                      {!(cell.hideWhenLoading && isLoading) && (
+                                        <>
+                                          {cell.type === 'checkbox' && (
+                                            <>
+                                              <div className="checkbox">
+                                                <input type="checkbox" />
+                                              </div>
+                                              {/* <div className="checkbox" /> */}
+                                            </>
+                                          )}
+                                          {cell.type == null && <>{cell.text}</>}
+                                        </>
+                                      )}
+                                    </td>
+                                  </>
+                                )}
+                              </>
+                            ))}
+                          </tr>
+                        </>
+                      ))}
+                    </>
+                  )}
               </table>
             </>
           ))}
