@@ -10,10 +10,16 @@ export default function GenericReport({ reportDefinition }) {
   const [isLoading, setIsLoading] = useState(false);
   const [apiCalled, setApiCalled] = useState(false);
 
-  function handleRunClicked()
+  function handleResetClicked()
   {
-    console.log('run clicked')
+    console.log('reset clicked')
   }
+
+  function handleSubmitClicked(params)
+  {
+    console.log('submit clicked', params)
+  }
+  
 
 
   useEffect(() => {
@@ -48,7 +54,7 @@ export default function GenericReport({ reportDefinition }) {
   return (
     <>
       {/* {JSON.stringify(data)} */}
-      <ReportParams runClicked={handleRunClicked}/>
+      <ReportParams resetClicked={handleResetClicked} submitClicked={handleSubmitClicked} parameters={reportDefinition.parameters} />
       <ReportViewer
         data={data}
         apiCalled={apiCalled}

@@ -5,11 +5,18 @@ import './style.css';
 export default function App() {
   const reportObj = {
     runOnLoad: true,
-    parameters: [
-      {
-        
+    parameters: {
+      test: {
+        label: 'Label',
+        type: 'text',
+        value: 'Hello, World'
+      },
+      hello: {
+        label: 'Site',
+        type: 'dropdown',
+        endpoint: 'https://eoujh3f1cjlenvn.m.pipedream.net'
       }
-    ],
+    },
     layout: [
       {
         type: 'reportHeader',
