@@ -90,11 +90,7 @@ class Report {
           }
 
           if (section.type === 'imageChart') {
-            console.log(currentPageHeightRemaining)
             currentPageHeightRemaining -= section.staticHeight
-            console.log(currentPageHeightRemaining)
-            
-            console.log(currentPageHeightRemaining)
           }
 
           let rowsAvailable = Math.floor(
@@ -118,12 +114,12 @@ class Report {
           currentPage.push(currentTable);
 
           if (rowsLeft) {
-            console.log(
-              'NEW PAGE',
-              rowsLeft,
-              rowsUsed,
-              currentTable.rows.length
-            );
+            // console.log(
+            //   'NEW PAGE',
+            //   rowsLeft,
+            //   rowsUsed,
+            //   currentTable.rows.length
+            // );
             if (report.pageFooter) currentPage.push(report.pageFooter);
             pagedReport.push(JSON.parse(JSON.stringify(currentPage)));
 
@@ -206,19 +202,23 @@ class Report {
       // table.rows.push([[{ title: 'hello' }]]);
     } else {
       if (section.dataSet) {
-        if (
-          !(
-            this.reportData[section.dataSet] &&
-            this.reportData[section.dataSet].length
-          )
-        ) {
-          console.error(`Missing or empty report dataset '${section.dataSet}'`);
-        } else {
+        // if (
+        //   !(
+        //     this.reportData[section.dataSet] &&
+        //     this.reportData[section.dataSet].length
+        //   )
+        // ) {
+        //   //console.error(`Missing or empty report dataset '${section.dataSet}'`);
+        // } else {
+
+        if (this.reportData[section.dataSet]) {
           for (let dataSetRow of this.reportData[section.dataSet]) {
             let row = this.renderRow(section.columns, dataSetRow);
             table.rows.push(row);
+            //}
           }
         }
+
       } else {
         let row = this.renderRow(section.columns, null);
         table.rows.push(row);
@@ -249,12 +249,10 @@ class Report {
   renderImageChartRow(section) {
     const chartUrl = section.chartUrl;
     let chartData = "";
-    console.log('section', section)
-    console.log('here', this.reportData[section.dataSet] )
-    if (!this.reportData[section.dataSet])
-      console.error(`Missing or empty report dataset '${section.dataSet}'`)
-    else
-      chartData = this.reportData[section.dataSet];
+    // if (!this.reportData[section.dataSet])
+    //   console.error(`Missing or empty report dataset '${section.dataSet}'`)
+    // else
+    chartData = this.reportData[section.dataSet];
 
 
     return [{ chartUrl: `${chartUrl}${chartData}` }];
@@ -264,14 +262,14 @@ class Report {
     let value = '';
     let cell = {};
     if (section.dataSet) {
-      if (
-        !(
-          this.reportData[section.dataSet] &&
-          this.reportData[section.dataSet].length
-        )
-      ) {
-        console.error(`Missing or empty report dataset '${section.dataSet}'`);
-      }
+      // if (
+      //   !(
+      //     this.reportData[section.dataSet] &&
+      //     this.reportData[section.dataSet].length
+      //   )
+      // ) {
+      //   //console.error(`Missing or empty report dataset '${section.dataSet}'`);
+      // }
 
       if (
         this.reportData[section.dataSet] &&
@@ -385,7 +383,7 @@ class Report {
     let report = this.bindReport(this.reportLayout);
     let pagedReport = this.pageReport(report);
     pagedReport = this.replaceStaticVariables(pagedReport);
-    console.log(pagedReport);
+    // console.log(pagedReport);
     return pagedReport;
   }
 }

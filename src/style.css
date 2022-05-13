@@ -194,7 +194,7 @@ body {
   background: rgb(204, 204, 204);
 }
 
-page {
+div.page {
   background: white;
   display: block;
   margin: 0 auto;
@@ -205,39 +205,39 @@ page {
   /* transform: scale(0.8); */
 }
 
-page.A4 {
+div.page.A4 {
   width: 20.5cm;
   height: 29.2cm;
 }
 
-page.A4.landscape {
+div.page.A4.landscape {
   width: 29.7cm;
   height: 21cm;
 }
 
-page.A3 {
+div.page.A3 {
   width: 29.7cm;
   height: 42cm;
 }
 
-page.A3.landscape {
+div.page.A3.landscape {
   width: 42cm;
   height: 29.7cm;
 }
 
-page[size='A5'] {
+div.page[size='A5'] {
   width: 14.8cm;
   height: 21cm;
 }
 
-page[size='A5'][layout='landscape'] {
+div.page[size='A5'][layout='landscape'] {
   width: 21cm;
   height: 14.8cm;
 }
 
 @media print {
   body,
-  page {
+  div.page {
     margin: 0;
     box-shadow: none;
     page-break-after: always;

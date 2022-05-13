@@ -4,11 +4,17 @@ import './style.css';
 
 export default function App() {
   const reportObj = {
+    runOnLoad: true,
+    parameters: [
+      {
+        
+      }
+    ],
     layout: [
       {
         type: 'reportHeader',
         title: 'Users Report',
-        subTitle: 'By company and age',
+        subTitle: 'By Company and Age',
         icon: 'https://cloudpass.azureedge.net/images/report-icon-delivery.png',
       },
       {
@@ -36,8 +42,8 @@ export default function App() {
         type: 'imageChart',
         rowHeight: 1,
         staticHeight: 8,
-        
-        title: "Users by month",
+
+        title: "Users by Month",
         dataSet: 'userReportData',
         chartUrl: 'https://image-charts.com/chart?chbr=20&chco=0191c8&chdlp=r&chs=650x300&cht=bvs&chtt=&chxt=x%2Cy'
       },
@@ -76,33 +82,33 @@ export default function App() {
         title: 'Users Report',
         date: new Date().toLocaleDateString(),
       },
-      summaryDataSet: [
-        // { value: '31' },
-        // { value: '11.05.22' },
-        // { value: '11:30AM' },
-      ],
-      dataSet1: [
-        // { name: 'Daniel Frain', age: 59 },
-        // { name: 'Andrew Smith', company: 'Chichester Electrical Ltd', age: 44 },
-        // { name: 'Michell Barnard', company: 'Creative Images', age: 10 },
-        // { name: 'Angela Davies', company: 'Creative Images', age: 43 },
-        // { name: 'Peter Jones', company: 'Howard Hunt (City) Ltd', age: 54 },
-        // { name: 'Andy Atkinson', company: 'CloudPass', age: 7 },
-        // { name: 'Sophie Sowerby', company: 'Creative Images', age: 28 },
-        // { name: 'Michael Jones', company: 'Chichester Electrical Ltd', age: 11 },
-        // { name: 'Ian Jones', company: 'Cheshire Removals & Storage', age: 35 },
-        // { name: 'Kelly Wyatt', company: 'Idris & Co Solicitors', age: 8 },
-        // { name: 'Tony Argyle', company: 'Cheshire Removals & Storage', age: 12 },
-        // { name: 'Sarah Greenwood', company: 'Creative Images', age: 27 },
-        // { name: 'Amy Wi', company: 'Creative Images', age: 55 },
-        // { name: 'Geoff Hurst', company: 'Cheshire Removals & Storage', age: 23 },
-        // { name: 'Emma Smith', company: 'Cheshire Removals & Storage', age: 43 },
-        // { name: 'John Sturrock', company: 'Howard Hunt (City) Ltd', age: 53 },
-        // { name: 'Marlon Francis', company: 'Chichester Electrical Ltd', age: 49 },
-        // { name: 'Joseph Bloggs', company: 'Howard Hunt (City) Ltd', age: 27 },
-        // { name: 'Darren Oliver', company: 'CloudPass', age: 39 },
-        // { name: 'Joe Smith', company: 'Howard Hunt (City) Ltd', age: 35 },
-      ],
+      // summaryDataSet: [
+      // { value: '31' },
+      // { value: '11.05.22' },
+      // { value: '11:30AM' },
+      // ],
+      // dataSet1: [
+      // { name: 'Daniel Frain', age: 59 },
+      // { name: 'Andrew Smith', company: 'Chichester Electrical Ltd', age: 44 },
+      // { name: 'Michell Barnard', company: 'Creative Images', age: 10 },
+      // { name: 'Angela Davies', company: 'Creative Images', age: 43 },
+      // { name: 'Peter Jones', company: 'Howard Hunt (City) Ltd', age: 54 },
+      // { name: 'Andy Atkinson', company: 'CloudPass', age: 7 },
+      // { name: 'Sophie Sowerby', company: 'Creative Images', age: 28 },
+      // { name: 'Michael Jones', company: 'Chichester Electrical Ltd', age: 11 },
+      // { name: 'Ian Jones', company: 'Cheshire Removals & Storage', age: 35 },
+      // { name: 'Kelly Wyatt', company: 'Idris & Co Solicitors', age: 8 },
+      // { name: 'Tony Argyle', company: 'Cheshire Removals & Storage', age: 12 },
+      // { name: 'Sarah Greenwood', company: 'Creative Images', age: 27 },
+      // { name: 'Amy Wi', company: 'Creative Images', age: 55 },
+      // { name: 'Geoff Hurst', company: 'Cheshire Removals & Storage', age: 23 },
+      // { name: 'Emma Smith', company: 'Cheshire Removals & Storage', age: 43 },
+      // { name: 'John Sturrock', company: 'Howard Hunt (City) Ltd', age: 53 },
+      // { name: 'Marlon Francis', company: 'Chichester Electrical Ltd', age: 49 },
+      // { name: 'Joseph Bloggs', company: 'Howard Hunt (City) Ltd', age: 27 },
+      // { name: 'Darren Oliver', company: 'CloudPass', age: 39 },
+      // { name: 'Joe Smith', company: 'Howard Hunt (City) Ltd', age: 35 },
+      // ],
     },
     apiEndpoint: 'https://eolnbeduw5sicf9.m.pipedream.net/',
   };
