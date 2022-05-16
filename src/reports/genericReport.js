@@ -9,7 +9,7 @@ export default function GenericReport({ reportDefinition }) {
   const [error, setError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [apiCalled, setApiCalled] = useState(false);
-  const [params, setParams] = useState({});
+  const [params, setParams] = useState(reportDefinition.parameters ?? {});
 
   function dump(input) {
     return JSON.stringify(input, null, 2);
@@ -23,25 +23,51 @@ export default function GenericReport({ reportDefinition }) {
     setParams(parameters)
   }
 
-  function buildQueryString(keysToInclude, parameters) {
-    console.log('buildQueryString', parameters, keysToInclude);
+  function buildFilteredParams(keys, parameters)
+  {
     try
     {
-      if (keysToInclude.length == 0) {
-        return "";
+      if (keys.length == 0) {
+        return {};
       }
 
-      let queryParams = {};
-      keysToInclude.forEach(key => {
-        queryParams[key] = parameters[key]?.value ?? '';
+      let params = {};
+      keys.forEach(key => {
+        params[key] = parameters[key]?.value ?? '';
       });
-      return new URLSearchParams(queryParams).toString();
+      return params;
+    }
+    catch(err)
+    {
+      return {};
+    }
+  }
+
+  function buildQueryString(keysToInclude, parameters) {
+    try
+    {
+      const filteredParams = buildFilteredParams(keysToInclude, parameters);
+      return new URLSearchParams(filteredParams).toString();
     }
     catch(err)
     {
       console.error(err);
     }
-    
+  }
+
+  function buildBody(keysToInclude, parameters) {
+    try
+    {
+      if (keysToInclude.length == 0) {
+        return {};
+      }
+      const filteredParams = buildFilteredParams(keysToInclude, parameters);
+      return filteredParams;
+    }
+    catch(err)
+    {
+      console.error(err);
+    }
   }
 
   function loadReport() {
@@ -50,19 +76,26 @@ export default function GenericReport({ reportDefinition }) {
       setTimeout(() => {
 
         let querystring= "";
-        setApiCalled(true);
         if (reportDefinition.apiEndpoint.queryStringParams.length > 0) {
           querystring = buildQueryString(reportDefinition.apiEndpoint.queryStringParams, params);
         }
-
+        
+        let body = {};
+        if (reportDefinition.apiEndpoint.bodyParams.length > 0) {
+          body = buildBody(reportDefinition.apiEndpoint.bodyParams, params);
+        }
+        
+        setApiCalled(true);
         let endpoint = reportDefinition.apiEndpoint.url;
         if (querystring) endpoint += "?" + querystring;
 
-        console.log(querystring)
-        console.log(endpoint)
+        let fetchOptions = {};
 
+        fetchOptions.method = reportDefinition.apiEndpoint.method;
 
-        fetch(endpoint)
+        if (body) fetchOptions.body = JSON.stringify(body);
+
+        fetch(endpoint, fetchOptions)
           .then((response) => {
             if (!response.ok) {
               setError(true);

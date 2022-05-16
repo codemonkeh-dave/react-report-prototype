@@ -119,8 +119,9 @@ export default function App() {
     },
     apiEndpoint: { 
       url: 'https://eolnbeduw5sicf9.m.pipedream.net/',
-      method: 'GET',
-      queryStringParams: ['filter', 'siteId']
+      method: 'POST',
+      queryStringParams: ['filter', 'siteId'],
+      bodyParams: ['filter', 'siteId']
     }
   };
 
