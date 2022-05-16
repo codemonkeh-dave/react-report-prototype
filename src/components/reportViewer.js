@@ -2,7 +2,7 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import { Report } from '../services/report.js';
 
-export default function ReportViewer({ layout, data, apiCalled, isLoading, error }) {
+export default function ReportViewer({ layout, data, params, apiCalled, isLoading, error }) {
   function dump(input) {
     return JSON.stringify(input, null, 2);
   }
@@ -17,11 +17,12 @@ export default function ReportViewer({ layout, data, apiCalled, isLoading, error
 
   useEffect(() => {
     LoadReport();
-  }, [layout, data, isLoading, apiCalled]);
+  }, [layout, data, isLoading, apiCalled, params]);
 
   return (
     <>
       {/* {dump(apiCalled)} */}
+
       {pagedReport.map((page, index) => (
         <div className="A4 page" key={index}>
           {page.map((table, index) => (

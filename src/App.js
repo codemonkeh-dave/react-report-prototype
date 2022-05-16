@@ -6,15 +6,16 @@ export default function App() {
   const reportObj = {
     runOnLoad: true,
     parameters: {
-      test: {
+      filter: {
         label: 'Label',
         type: 'text',
-        value: 'Hello, World'
+        value: 'A text filter here'
       },
-      hello: {
+      siteId: {
         label: 'Site',
         type: 'dropdown',
-        endpoint: 'https://eoujh3f1cjlenvn.m.pipedream.net'
+        emptyOption: { text: 'All Sites', value: '-1'},
+        endpoint: { url: 'https://eoujh3f1cjlenvn.m.pipedream.net'}
       }
     },
     layout: [
@@ -49,7 +50,6 @@ export default function App() {
         type: 'imageChart',
         rowHeight: 1,
         staticHeight: 8,
-
         title: "Users by Month",
         dataSet: 'userReportData',
         chartUrl: 'https://image-charts.com/chart?chbr=20&chco=0191c8&chdlp=r&chs=650x300&cht=bvs&chtt=&chxt=x%2Cy'
@@ -117,7 +117,11 @@ export default function App() {
       // { name: 'Joe Smith', company: 'Howard Hunt (City) Ltd', age: 35 },
       // ],
     },
-    apiEndpoint: 'https://eolnbeduw5sicf9.m.pipedream.net/',
+    apiEndpoint: { 
+      url: 'https://eolnbeduw5sicf9.m.pipedream.net/',
+      method: 'GET',
+      queryStringParams: ['filter', 'siteId']
+    }
   };
 
   return (

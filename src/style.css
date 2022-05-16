@@ -247,3 +247,38 @@ div.page[size='A5'][layout='landscape'] {
     background-color: #fff;
   }
 }
+
+table.params {
+  /* color:red; */
+
+  
+}
+
+table.params {
+  height: 3.5em;
+}
+
+table.params tr td:first-child{
+  /* font-weight: bold; */
+  width: 0%;
+}
+
+.report h1 {
+  color:#333;
+  font-size:large;
+  font-weight: 100;
+  margin:0;
+  margin-bottom: 1em;
+}
+
+div.report {
+  /* border: solid 1px red; */
+  background-color: #efefef;
+  margin-bottom: 1em;
+  padding: 1em 1em;
+  border: solid 1px #888;
+}
+
+.report button {
+  margin-right: .5em;
+}

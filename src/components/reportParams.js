@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import React from 'react';
 import Dropdown from './dropdown.js'
 import Textbox from './textbox.js';
 
@@ -12,9 +13,9 @@ export default function ReportParams({ resetClicked, submitClicked, parameters }
 
 
     function handleInputChange(key, param, args) {
-        console.log('key', key)
-        console.log('param', param)
-        console.log('args', args)
+        // console.log('key', key)
+        // console.log('param', param)
+        // console.log('args', args)
 
         param.value = args?.target?.value;
         setParamState({ ...paramState, [key]: param });
@@ -26,29 +27,31 @@ export default function ReportParams({ resetClicked, submitClicked, parameters }
 
     return (
         <>
-            {dump(paramState)}
-            <h1>Report Params</h1>
+            <div className="report">
+                {/* <pre>{dump(paramState)}</pre> */}
+                <h1>Report Parameters</h1>
 
-            <table>
-                <tbody>
-                    {Object.keys(paramState).map((paramKey) => (
-                        <>
-                            {paramState[paramKey].type === 'text' && (
-                                <>
-                                    <Textbox parameter={paramState[paramKey]} paramKey={paramKey} handleInputChange={handleInputChange} />
-                                </>
-                            )}
-                            {paramState[paramKey].type === 'dropdown' && (
-                                <Dropdown label={paramState[paramKey].label} endpoint={paramState[paramKey].endpoint} />
-                            )}
-                        </>
-                    )
-                    )}
-                </tbody>
-            </table>
-            <br />
-            <button onClick={resetClicked}>Reset</button>
-            <button onClick={() => submitClicked(paramState)}>Submit</button>
+                <table className="params">
+                    <tbody>
+                        {Object.keys(paramState).map((paramKey, index) => (
+                            <React.Fragment key={index}>
+                                {paramState[paramKey].type === 'text' && (
+                                    <>
+                                        <Textbox parameter={paramState[paramKey]} paramKey={paramKey} handleInputChange={handleInputChange} />
+                                    </>
+                                )}
+                                {paramState[paramKey].type === 'dropdown' && (
+                                    <Dropdown parameter={paramState[paramKey]} paramKey={paramKey} handleInputChange={handleInputChange}  />
+                                )}
+                            </React.Fragment>
+                        )
+                        )}
+                    </tbody>
+                </table>
+                <br />
+                <button onClick={resetClicked}>Reset</button>
+                <button onClick={() => submitClicked(paramState)}>Submit</button>
+            </div>
         </>
     )
 }
