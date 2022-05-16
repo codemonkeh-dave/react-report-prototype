@@ -121,7 +121,11 @@ export default function App() {
       url: 'https://eolnbeduw5sicf9.m.pipedream.net/',
       method: 'POST',
       queryStringParams: ['filter', 'siteId'],
-      bodyParams: ['filter', 'siteId']
+      bodyParams: ['filter', 'siteId'],
+      includeAuthHeaders: true,
+      customHeaders: {
+        'test-header': 'test-value'
+      }
     }
   };
 

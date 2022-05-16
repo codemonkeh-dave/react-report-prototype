@@ -90,11 +90,32 @@ export default function GenericReport({ reportDefinition }) {
         if (querystring) endpoint += "?" + querystring;
 
         let fetchOptions = {};
+        let headers = {};
+
+        if (reportDefinition.apiEndpoint.customHeaders) {
+          headers = {...headers, ...reportDefinition.apiEndpoint.customHeaders};
+        }
 
         fetchOptions.method = reportDefinition.apiEndpoint.method;
 
-        if (body) fetchOptions.body = JSON.stringify(body);
+        if (reportDefinition.apiEndpoint.method == "POST") {
+          headers.accept = "application/json";
+          headers['content-type'] = "application/json";
+        }
 
+        if (reportDefinition.apiEndpoint.includeAuthHeaders === true) {
+          const bearerToken = localStorage.getItem('bearerToken');
+          if (bearerToken)
+            headers.authorization = `Bearer ${bearerToken}`
+          else
+          headers.authorization = `Bearer _BEARER_TOKEN_NOT_FOUND_`
+        }
+
+        fetchOptions.headers = headers;
+
+        console.log(fetchOptions);
+
+        if (body) fetchOptions.body = JSON.stringify(body);
         fetch(endpoint, fetchOptions)
           .then((response) => {
             if (!response.ok) {
@@ -120,6 +141,7 @@ export default function GenericReport({ reportDefinition }) {
   }
 
   useEffect(() => {
+    console.log('loadReport')
     loadReport();
   }, [params]);
 
