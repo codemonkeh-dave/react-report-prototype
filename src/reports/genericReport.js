@@ -113,8 +113,6 @@ export default function GenericReport({ reportDefinition }) {
 
         fetchOptions.headers = headers;
 
-        console.log(fetchOptions);
-
         if (body) fetchOptions.body = JSON.stringify(body);
         fetch(endpoint, fetchOptions)
           .then((response) => {
@@ -141,7 +139,6 @@ export default function GenericReport({ reportDefinition }) {
   }
 
   useEffect(() => {
-    console.log('loadReport')
     loadReport();
   }, [params]);
 
