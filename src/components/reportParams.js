@@ -41,8 +41,8 @@ export default function ReportParams({ resetClicked, submitClicked, parameters }
                         )}
                     </div>
                     <br />
-                    <button class="reportButton" onClick={resetClicked}>Reset</button>
-                    <button class="reportButton" onClick={() => submitClicked(paramState)}>Submit</button>
+                    <button className="reportButton" onClick={resetClicked}>Reset</button>
+                    <button className="reportButton" onClick={() => submitClicked(paramState)}>Submit</button>
                 
             </div>
         </>
