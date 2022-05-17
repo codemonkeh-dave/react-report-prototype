@@ -11,12 +11,7 @@ export default function ReportParams({ resetClicked, submitClicked, parameters }
         setParamState(parameters);
     }, [parameters])
 
-
     function handleInputChange(key, param, args) {
-        // console.log('key', key)
-        // console.log('param', param)
-        // console.log('args', args)
-
         param.value = args?.target?.value;
         setParamState({ ...paramState, [key]: param });
     }
@@ -27,30 +22,28 @@ export default function ReportParams({ resetClicked, submitClicked, parameters }
 
     return (
         <>
-            <div className="report">
-                {/* <pre>{dump(paramState)}</pre> */}
+            <div className="paramsContainer">
                 <h1>Report Parameters</h1>
-
-                <table className="params">
-                    <tbody>
+                
+                    <div className="params">
                         {Object.keys(paramState).map((paramKey, index) => (
-                            <React.Fragment key={index}>
+                            <div className="row" key={index}>
                                 {paramState[paramKey].type === 'text' && (
                                     <>
                                         <Textbox parameter={paramState[paramKey]} paramKey={paramKey} handleInputChange={handleInputChange} />
                                     </>
                                 )}
                                 {paramState[paramKey].type === 'dropdown' && (
-                                    <Dropdown parameter={paramState[paramKey]} paramKey={paramKey} handleInputChange={handleInputChange}  />
+                                    <Dropdown parameter={paramState[paramKey]} paramKey={paramKey} handleInputChange={handleInputChange} />
                                 )}
-                            </React.Fragment>
+                            </div>
                         )
                         )}
-                    </tbody>
-                </table>
-                <br />
-                <button onClick={resetClicked}>Reset</button>
-                <button onClick={() => submitClicked(paramState)}>Submit</button>
+                    </div>
+                    <br />
+                    <button class="reportButton" onClick={resetClicked}>Reset</button>
+                    <button class="reportButton" onClick={() => submitClicked(paramState)}>Submit</button>
+                
             </div>
         </>
     )

@@ -203,6 +203,7 @@ div.page {
   position: relative;
   padding: 0.25cm;
   /* transform: scale(0.8); */
+  /* transform: scale(0.4); */
 }
 
 div.page.A4 {
@@ -255,12 +256,12 @@ table.params {
 }
 
 table.params {
-  height: 3.5em;
+  /* height: 3.5em; */
 }
 
 table.params tr td:first-child{
   /* font-weight: bold; */
-  width: 0%;
+  
 }
 
 .report h1 {
@@ -277,8 +278,64 @@ div.report {
   margin-bottom: 1em;
   padding: 1em 1em;
   border: solid 1px #888;
+
 }
 
 .report button {
   margin-right: .5em;
 }
+
+
+/* Params */
+
+.paramsContainer > h1 
+{
+  font-size:larger;
+}
+
+.params
+{
+  width:100%;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.reportButton{
+  margin-right: .5em;
+}
+
+.paramsContainer
+{
+  background-color: #efefef;
+  padding:0.5em 1em;
+  margin-bottom: 1em;
+  overflow:hidden;
+}
+
+.row {
+  display:flex;
+  height: 2em;
+  margin-right: 10px;
+}
+
+.row > .label {
+  margin-right: 2em;
+  max-width: 10em;
+  min-width: 10em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.row > .input {
+  margin-right: 1em;
+}
+
+.row > .input > input, .row > .input > select {
+  width:100%;
+  min-width: 4em;
+  min-width: 16em;
+}
+
+/* End Params */

@@ -7,15 +7,26 @@ export default function App() {
     runOnLoad: true,
     parameters: {
       filter: {
-        label: 'Label',
+        label: 'Label A',
+        type: 'text',
+        value: 'A text filter here'
+      },
+      filter2: {
+        label: 'Label B',
+        type: 'text',
+        value: 'A text filter here'
+      },
+      filter3: {
+        label: 'Label C',
         type: 'text',
         value: 'A text filter here'
       },
       siteId: {
         label: 'Site',
         type: 'dropdown',
-        emptyOption: { text: 'All Sites', value: '-1'},
-        endpoint: { url: 'https://eoujh3f1cjlenvn.m.pipedream.net'}
+        emptyOption: { text: 'Select a site'},
+        endpoint: { url: 'https://eoujh3f1cjlenvn.m.pipedream.net'},
+        value: '-1'
       }
     },
     layout: [

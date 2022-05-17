@@ -1,12 +1,10 @@
-export default function TextInput({parameter, paramKey, handleInputChange}) {
+export default function TextInput({ parameter, paramKey, handleInputChange }) {
     return (
         <>
-            <tr>
-                <td>{parameter.label}</td>
-                <td>
-                    <input type="text" value={parameter.value} onChange={(e) => { handleInputChange(paramKey, parameter, e) }} />
-                </td>
-            </tr>
+            <div className="label">{parameter.label}</div>
+            <div className="input">
+                <input type="text" value={parameter.value} onChange={(e) => { handleInputChange(paramKey, parameter, e) }} />
+            </div>
         </>
     )
 }

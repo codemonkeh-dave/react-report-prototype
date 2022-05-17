@@ -16,7 +16,7 @@ export default function GenericReport({ reportDefinition }) {
   }
 
   function handleResetClicked() {
-    console.log('reset clicked')
+    setParams(reportDefinition.parameters);
   }
 
   function handleSubmitClicked(parameters) {
@@ -147,8 +147,8 @@ export default function GenericReport({ reportDefinition }) {
 
   return (
     <>
-      <pre>{dump(params)}</pre>
-      <ReportParams resetClicked={handleResetClicked} submitClicked={handleSubmitClicked} parameters={reportDefinition.parameters} />
+      <pre>{dump(reportDefinition.parameters)}</pre>
+      <ReportParams resetClicked={handleResetClicked} submitClicked={handleSubmitClicked} parameters={params} />
       <ReportViewer
         data={data}
         params={params}

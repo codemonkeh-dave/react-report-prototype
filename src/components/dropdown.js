@@ -17,20 +17,19 @@ export default function Dropdown({ parameter, paramKey, handleInputChange }) {
             .then((response) => {
                 setDropdownItems(response.result ?? []);
 
-                if (parameter.emptyOption){
-                    handleInputChange(paramKey, parameter, { target: { value: parameter.emptyOption.value ?? '' } })
+                if (parameter.emptyOption) {
+                    handleInputChange(paramKey, parameter, { target: { value: parameter.value ?? '' } })
                 }
-                else{
+                else {
                     handleInputChange(paramKey, parameter, { target: { value: response?.result[0]?.value ?? '' } })
                 }
             })
     }, []);
 
     return (
-        <tr>
-            <td>{parameter.label}</td>
-            <td>
-
+        <>
+            <div className="label">{parameter.label}</div>
+            <div className="input">
                 <select onChange={(e) => { handleInputChange(paramKey, parameter, e) }}>
                     {parameter.emptyOption && (
                         <option value={parameter.emptyOption.value}>{parameter.emptyOption.text}</option>
@@ -41,7 +40,7 @@ export default function Dropdown({ parameter, paramKey, handleInputChange }) {
                         </React.Fragment>
                     ))}
                 </select>
-            </td>
-        </tr>
+            </div>
+        </>
     )
 }
