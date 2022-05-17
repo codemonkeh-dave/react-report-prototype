@@ -144,7 +144,7 @@ export default function GenericReport({ reportDefinition }) {
 
   return (
     <>
-      <pre>{dump(reportDefinition.parameters)}</pre>
+      {/* <pre>{dump(reportDefinition.parameters)}</pre> */}
       <ReportParams resetClicked={handleResetClicked} submitClicked={handleSubmitClicked} parameters={params} />
       <ReportViewer
         data={data}
