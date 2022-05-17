@@ -383,7 +383,6 @@ class Report {
     let report = this.bindReport(this.reportLayout);
     let pagedReport = this.pageReport(report);
     pagedReport = this.replaceStaticVariables(pagedReport);
-    // console.log(pagedReport);
     return pagedReport;
   }
 }
